@@ -1,36 +1,41 @@
+import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <div className="navbar fixed bg-denflix-secondary shadow-sm">
       <div className="flex-1">
-        <a className="text-denflix-primary text-xl mx-5 font-bold hover:cursor-pointer">
+        <Link to="/" className="text-denflix-primary text-xl mx-5 font-bold hover:cursor-pointer">
           DenFlix
-        </a>
-        
+        </Link>
+
         {/* Home */}
-        <a 
-          tabIndex="0" 
-          className="group relative text-white text-md mx-2 font-semibold hover:cursor-pointer transition-colors duration-300 outline-none
-                     hover:text-denflix-primary focus:text-denflix-primary pb-1"
+        <Link
+          to="/"
+          className="group relative text-white text-md mx-2 font-semibold hover:cursor-pointer transition-colors duration-300 outline-none hover:text-denflix-primary focus:text-denflix-primary pb-1"
         >
           Home
           {/* Line Animation */}
-          <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-denflix-primary transition-all duration-300 
-                           group-hover:w-full group-focus:w-full"></span>
-        </a>
+          <span
+            className="absolute left-0 bottom-0 w-0 h-[2px] bg-denflix-primary transition-all duration-300 
+                           group-hover:w-full group-focus:w-full"
+          ></span>
+        </Link>
 
         {/* Trending */}
-        <a 
-          tabIndex="0" 
+        <Link
+          to="/trending"
+          tabIndex="0"
           className="group relative text-white text-md mx-2 font-semibold hover:cursor-pointer transition-colors duration-300 outline-none
                      hover:text-denflix-primary focus:text-denflix-primary pb-1"
         >
           Trending
           {/* Garis Animasi */}
-          <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-denflix-primary transition-all duration-300 
-                           group-hover:w-full group-focus:w-full"></span>
-        </a>
+          <span
+            className="absolute left-0 bottom-0 w-0 h-[2px] bg-denflix-primary transition-all duration-300 
+                           group-hover:w-full group-focus:w-full"
+          ></span>
+        </Link>
       </div>
-      
+
       <div className="flex gap-2 mr-4">
         <input
           type="text"
