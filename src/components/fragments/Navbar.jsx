@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
-    <div className="navbar fixed bg-denflix-secondary shadow-sm">
+    <div className="navbar fixed z-10 bg-denflix-secondary shadow-sm">
       <div className="flex-1">
         <Link to="/" className="text-denflix-primary text-xl mx-5 font-bold hover:cursor-pointer">
           DenFlix
