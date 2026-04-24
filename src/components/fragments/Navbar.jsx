@@ -1,26 +1,26 @@
 import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
-    <div className="navbar fixed z-10 bg-denflix-secondary shadow-sm">
+    <div className="navbar fixed z-10 bg-denflix-secondary shadow-lg">
       <div className="flex-1">
-        <Link to="/" className="text-denflix-primary text-xl mx-5 font-bold hover:cursor-pointer">
+        <Link
+          to="/"
+          className="text-denflix-primary text-xl mx-5 font-bold hover:cursor-pointer"
+        >
           DenFlix
         </Link>
 
-        {/* Home */}
         <Link
           to="/"
           className="group relative text-white text-md mx-2 font-semibold hover:cursor-pointer transition-colors duration-300 outline-none hover:text-denflix-primary focus:text-denflix-primary pb-1"
         >
           Home
-          {/* Line Animation */}
           <span
             className="absolute left-0 bottom-0 w-0 h-[2px] bg-denflix-primary transition-all duration-300 
                            group-hover:w-full group-focus:w-full"
           ></span>
         </Link>
 
-        {/* Trending */}
         <Link
           to="/trending"
           tabIndex="0"
@@ -28,7 +28,6 @@ const Navbar = () => {
                      hover:text-denflix-primary focus:text-denflix-primary pb-1"
         >
           Trending
-          {/* Garis Animasi */}
           <span
             className="absolute left-0 bottom-0 w-0 h-[2px] bg-denflix-primary transition-all duration-300 
                            group-hover:w-full group-focus:w-full"

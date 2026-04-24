@@ -1,6 +1,6 @@
 const HeroSection = () => {
   return (
-    <div className="hero h-[50vh] md:h-[60vh] relative overflow-hidden">
+    <div className="hero h-[50vh] md:h-[60vh] relative overflow-hidden mb-10">
       <img
         src="/img/herobg.jpg"
         alt="Hero"
@@ -11,7 +11,7 @@ const HeroSection = () => {
 
       <div className="hero-content relative text-neutral-content text-center">
         <div className="max-w-xl">
-          <h1 className="mb-5 text-4xl md:text-6xl font-bold text-denflix-primary uppercase tracking-wider">
+          <h1 className="mb-5 text-4xl md:text-6xl font-bold text-white uppercase tracking-wider">
             Explore Your Favorite Movies
           </h1>
           <p className="mb-5 text-sm md:text-lg text-gray-200">
