@@ -1,10 +1,12 @@
 import HeroSection from "../components/movie/HeroSection";
+// import MovieList from "../components/movie/MovieList";
+import MovieList from "../components/movie/MovieList";
 
 const Home = () => {
   return (
     <div>
       <HeroSection />
-      <h1 className="text-denflix-primary text-center">home</h1>
+      <MovieList/>
     </div>
   );
 };
