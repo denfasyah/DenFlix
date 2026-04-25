@@ -13,7 +13,7 @@ const AppRoutes = () => {
         <Route path="/trending" element={<Trending />} />
         <Route path="/search" element={<Search />} />
         <Route path="/movie/:category" element={<MovieCategory />} />
-        <Route path="/movie/:id" element={<MovieDetail />} />
+        <Route path="/movie/detail/:id" element={<MovieDetail />} />
       </Routes>
     </div>
   );
