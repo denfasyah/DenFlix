@@ -1,11 +1,11 @@
 import api from "./api";
 
-export const getUpcomingMovies = async () => {
+export const getMovieList = async (endpoint) => {
   try {
-    const response = await api.get("/movie/upcoming");
+    const response = await api.get(`/movie/${endpoint}`);
     return response.data.results;
   } catch (error) {
-    console.error("Error fetching upcoming movies:", error);
+    console.error(`Error fetching ${endpoint} movies:`, error);
     throw error;
   }
 };
