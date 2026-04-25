@@ -9,7 +9,6 @@ const App = () => {
       <Navbar />
       <main className="flex-grow pt-16">
         <AppRoutes />
-        <h1 className="text-white p-10 text-center">Content Movie DenFlix...</h1>
       </main>
       <Footer />
     </div>
