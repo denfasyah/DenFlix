@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getMovieList } from "../../Services/movieService";
+import { getMovies } from "../../Services/movieService";
 import HeaderMovieList from "../common/HeaderMovieList";
 import CardMovieList from "./CardMovieList";
   
@@ -10,7 +10,7 @@ const MovieList = ({ endpoint, title, url }) => {
   useEffect(() => {
     const fetchUpcomingMovies = async () => {
       try {
-        const data = await getMovieList(endpoint);
+        const data = await getMovies(endpoint);
         setMovies(data.slice(0, 12));
       } catch (error) {
         console.error(`Error fetching ${endpoint} movies:`, error);
@@ -23,7 +23,7 @@ const MovieList = ({ endpoint, title, url }) => {
   }, [endpoint]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="text-white">Loading...</div>;
   }
 
   return (
