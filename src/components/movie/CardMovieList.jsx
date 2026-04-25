@@ -1,16 +1,19 @@
 import { Link } from "react-router-dom";
-const CardMovieList = () => {
+
+const CardMovieList = ({ movie }) => {
+  const img = `${import.meta.env.VITE_APP_IMAGEURL}/${movie.poster_path}`;
+
   return (
-    <div className="container carousel carousel-s gap-5 px-5 py-5">
+    <div className="carousel-item">
       <Link
-        to={`/movie/`}
-        className="carousel-item cursor-pointer hover:scale-105 transition-transform duration-300"
+        to={`/movie/${movie.id}`}
+        className="hover:scale-105 transition-transform duration-300 block"
       >
-        <div className="relative h-48 md:h-52 w-38 overflow-hidden">
+        <div className="relative h-48 w-32 md:h-52 md:w-36 overflow-hidden rounded-xl shadow-2xl">
           <img
-            src="/img/imgcard.jpg"
-            alt="poster card"
-            className="rounded-md object-cover h-full w-full"
+            src={img}
+            alt={movie.title}
+            className="object-cover h-full w-full"
           />
         </div>
       </Link>
