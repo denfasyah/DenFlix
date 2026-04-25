@@ -8,7 +8,7 @@ const Home = () => {
       <MovieList 
         title="Now Playing" 
         endpoint="now_playing" 
-        url="/movie/now-playing" 
+        url="/movie/now_playing" 
       />
       <MovieList 
         title="Popular Movies" 
@@ -18,7 +18,7 @@ const Home = () => {
       <MovieList 
         title="Top Rated" 
         endpoint="top_rated" 
-        url="/movie/top-rated" 
+        url="/movie/top_rated" 
       />
       <MovieList 
         title="Coming Soon" 

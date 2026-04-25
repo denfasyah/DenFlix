@@ -1,6 +1,6 @@
 import api from "./api";
 
-export const getMovieList = async (endpoint) => {
+export const getMovies = async (endpoint) => {
   try {
     const response = await api.get(`/movie/${endpoint}`);
     return response.data.results;
