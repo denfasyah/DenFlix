@@ -1,4 +1,4 @@
-import HeroSection from "../components/movie/HeroSection";
+import HeroSection from "../components/fragments/HeroSection";
 import MovieList from "../components/movie/MovieList";
 
 const Home = () => {
