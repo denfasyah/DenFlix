@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { getMovieDetail } from "../Services/movieService";
 import MovieHero from "../components/movie/MovieHero";
+import MovieSynopsis from "../components/movie/MovieSynopsis";
 import YouTube from "react-youtube";
 
 const MovieDetail = () => {
@@ -50,20 +51,15 @@ const MovieDetail = () => {
   };
 
   const providers = movie["watch/providers"]?.results?.ID;
-  const streaming = providers?.flatrate || []; 
-  const buyOrRent = providers?.buy || providers?.rent || []; 
+  const streaming = providers?.flatrate || [];
+  const buyOrRent = providers?.buy || providers?.rent || [];
 
   return (
     <div className="min-h-screen bg-black text-white pb-20">
       <MovieHero movie={movie} imageUrl={imageUrl} />
       <div className="max-w-6xl mx-auto px-8 mt-12 grid grid-cols-1 md:grid-cols-3 gap-12">
         <div className="md:col-span-2">
-          <h2 className="text-2xl font-bold text-denflix-primary mb-4">
-            Storyline
-          </h2>
-          <p className="text-gray-300 leading-relaxed text-lg">
-            {movie.overview}
-          </p>
+          <MovieSynopsis movie={movie} />
           <div className="mt-12">
             <h2 className="text-2xl font-bold text-denflix-primary mb-4">
               Where to Watch
@@ -75,7 +71,7 @@ const MovieDetail = () => {
                 {streaming.map((provider) => (
                   <Link
                     key={provider.provider_id}
-                    to={providers.link} 
+                    to={providers.link}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group relative inline-block"
@@ -154,7 +150,7 @@ const MovieDetail = () => {
               </p>
             </div>
           </div>
-        </div>  
+        </div>
       </div>
 
       <div className="mt-12 max-w-6xl mx-auto px-8">
