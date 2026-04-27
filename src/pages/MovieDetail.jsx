@@ -8,6 +8,7 @@ import MovieTrailer from "../components/movie/MovieTrailer";
 import MovieCast from "../components/movie/MovieCast";
 import WatchProviders from "../components/movie/WatchProviders";
 import MovieRecommendations from "../components/movie/MovieRecommendations";
+import MovieGallery from "../components/movie/MovieGallery";
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -78,6 +79,11 @@ const MovieDetail = () => {
         handleImageError={handleImageError}
       />
       <MovieRecommendations recommendations={movie.recommendations?.results} />
+      <MovieGallery
+        images={movie.images}
+        videos={movie.videos}
+        imageUrl={imageUrl}
+      />
     </div>
   );
 };

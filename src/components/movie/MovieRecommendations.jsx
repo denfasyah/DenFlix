@@ -4,7 +4,7 @@ const MovieRecommendations = ({ recommendations }) => {
   if (!recommendations || recommendations.length === 0) return null;
 
   return (
-    <div className="mt-16 max-w-6xl mx-auto px-8">
+    <div className="mt-12 max-w-6xl mx-auto px-8">
       <h2 className="text-2xl font-bold text-denflix-primary mb-4">
         Recommendations
       </h2>
