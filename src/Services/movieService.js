@@ -19,3 +19,13 @@ export const getMovieDetail = async (id) => {
     throw error;
   }
 };
+
+export const searchMovies = async (query) => {
+  try {
+    const response = await api.get(`/search/movie?query=${query}`);
+    return response.data.results;
+  } catch (error) {
+    console.error("Error searching movies:", error);
+    throw error;
+  }
+};

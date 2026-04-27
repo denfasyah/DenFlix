@@ -40,13 +40,13 @@ const MovieCategory = () => {
           </h1>
           <div className="flex justify-between">
             <p className="text-gray-400 text-sm mt-1">
-              Menampilkan semua koleksi {formatTitle(category)} di DenFlix
+              Menampilkan semua koleksi {formatTitle(category)}
             </p>
-            <Link
-              to={`/`}
-              className="ml-auto text-sm text-gray-400 hover:text-denflix-primary transition-colors"
+           <Link
+              to="/"
+              className="text-sm font-medium text-gray-400 hover:text-denflix-primary transition-all flex items-center gap-2"
             >
-              Back
+              <span>←</span> Back
             </Link>
           </div>
         </div>

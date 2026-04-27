@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Search from "../common/Search";
+import SearchInput from "../common/SearchInput";
 
 const HeroSection = ({ movies }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -58,7 +58,7 @@ const HeroSection = ({ movies }) => {
             Explore Your <span className="text-denflix-primary">Favorite</span> Movies
           </h1>
 
-          <Search />
+          <SearchInput />
 
           <p className="mt-6 text-xs md:text-sm text-gray-400 uppercase tracking-[0.3em] font-medium">
             Trending now on <span className="text-white">DenFlix</span>
