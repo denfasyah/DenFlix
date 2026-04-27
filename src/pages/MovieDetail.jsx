@@ -78,12 +78,12 @@ const MovieDetail = () => {
         imageUrl={imageUrl}
         handleImageError={handleImageError}
       />
-      <MovieRecommendations recommendations={movie.recommendations?.results} />
       <MovieGallery
         images={movie.images}
         videos={movie.videos}
         imageUrl={imageUrl}
       />
+      <MovieRecommendations recommendations={movie.recommendations?.results} />
     </div>
   );
 };

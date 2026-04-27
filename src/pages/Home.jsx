@@ -1,10 +1,26 @@
+import { useEffect, useState } from "react";
+import { getMovies } from "../Services/movieService"; // Sesuaikan path file
 import HeroSection from "../components/fragments/HeroSection";
 import MovieList from "../components/movie/MovieList";
 
 const Home = () => {
+  const [nowPlaying, setNowPlaying] = useState([]);
+
+ useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        // Memanggil fungsi getMovies dengan endpoint 'now_playing'
+        const data = await getMovies("now_playing");
+        setNowPlaying(data); // getMovies sudah mengembalikan response.data.results
+      } catch (error) {
+        console.error("Gagal mengambil data film:", error);
+      }
+    };
+    fetchMovies();
+  }, []);
   return (
     <div>
-      <HeroSection />
+     <HeroSection movies={nowPlaying} />
       <MovieList 
         title="Now Playing" 
         endpoint="now_playing" 
