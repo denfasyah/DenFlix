@@ -12,7 +12,7 @@ export const getMovies = async (endpoint) => {
 
 export const getMovieDetail = async (id) => {
   try {
-    const response = await api.get(`/movie/${id}?append_to_response=videos,credits,watch/providers`);
+    const response = await api.get(`/movie/${id}?append_to_response=videos,credits,watch/providers,recommendations`);
     return response.data;
   } catch (error) {
     console.error("Error fetching movie detail:", error);

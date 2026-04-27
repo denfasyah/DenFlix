@@ -7,6 +7,7 @@ import MovieInfo from "../components/movie/MovieInfo";
 import MovieTrailer from "../components/movie/MovieTrailer";
 import MovieCast from "../components/movie/MovieCast";
 import WatchProviders from "../components/movie/WatchProviders";
+import MovieRecommendations from "../components/movie/MovieRecommendations";
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -76,6 +77,7 @@ const MovieDetail = () => {
         imageUrl={imageUrl}
         handleImageError={handleImageError}
       />
+      <MovieRecommendations recommendations={movie.recommendations?.results} />
     </div>
   );
 };
