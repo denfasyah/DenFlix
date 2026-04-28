@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 const HeaderMovieList = ({title, url}) => {
   return (
     <div className="flex items-center px-4 pt-2">
-      <h1 className="text-denflix-primary font-semibold text-xl tracking-wide">
+      <h1 className="text-denflix-primary font-semibold text-2xl tracking-wide">
         {title}
       </h1>
       <Link

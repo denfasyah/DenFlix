@@ -29,3 +29,15 @@ export const searchMovies = async (query) => {
     throw error;
   }
 };
+
+export const getGenres = async () => {
+  try {
+    const response = await api.get(`genre/movie/list`);
+    return response.data.genres;
+  } catch (error) {
+    console.error("Error fetching genre movies:", error);
+    throw error;
+  }
+};
+
+  
