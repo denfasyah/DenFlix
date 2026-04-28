@@ -27,7 +27,7 @@ const MovieList = ({ endpoint, title, url }) => {
   }
 
   return (
-    <div className="px-5">
+    <div className="max-w-7xl mx-auto pr-6 ">
       <div className="bg-denflix-midnight rounded-lg mt-5">
         <HeaderMovieList title={title} url={url} />
         <div className="carousel carousel-center w-full gap-4 px-5 py-5">

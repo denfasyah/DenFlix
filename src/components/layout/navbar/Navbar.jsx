@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import NavBrand from "./../common/NavBrand";
-import NavLink from "../common/NavLink";
-import NavDropdown from "../common/NavDropdown";
-import NavList from "../common/NavList";
-import NavBookmark from "../common/NavBookmark";
-import NavProfile from "../common/NavProfile";
-import NavMobile from "../common/NavMobile";
+import NavBrand from "./NavBrand";
+import NavLink from "./NavLink";
+import NavDropdown from "./NavDropdown";
+import NavList from "./NavList";
+import NavBookmark from "./NavBookmark";
+import NavProfile from "./NavProfile";
+import NavMobile from "./NavMobile";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

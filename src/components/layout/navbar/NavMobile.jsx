@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import NavMobileLink from "../common/NavMobileLink";
+import NavMobileLink from "./NavMobileLink";
 
 const NavMobile = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
