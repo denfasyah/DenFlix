@@ -9,9 +9,8 @@ const Home = () => {
  useEffect(() => {
     const fetchMovies = async () => {
       try {
-        // Memanggil fungsi getMovies dengan endpoint 'now_playing'
         const data = await getMovies("now_playing");
-        setNowPlaying(data); // getMovies sudah mengembalikan response.data.results
+        setNowPlaying(data); 
       } catch (error) {
         console.error("Gagal mengambil data film:", error);
       }
@@ -22,7 +21,7 @@ const Home = () => {
     <div>
      <HeroSection movies={nowPlaying} />
       <MovieList 
-        title="Now Playing" 
+        title="Now Playing Movies" 
         endpoint="now_playing" 
         url="/movie/now_playing" 
       />
@@ -32,12 +31,12 @@ const Home = () => {
         url="/movie/popular" 
       />
       <MovieList 
-        title="Top Rated" 
+        title="Top Rated Movies" 
         endpoint="top_rated" 
         url="/movie/top_rated" 
       />
       <MovieList 
-        title="Coming Soon" 
+        title="Upcoming Movies" 
         endpoint="upcoming" 
         url="/movie/upcoming" 
       />

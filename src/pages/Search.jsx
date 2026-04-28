@@ -3,6 +3,7 @@ import { useSearchParams, Link } from "react-router-dom";
 import { searchMovies } from "../Services/movieService";
 import CardMovie from "../components/movie/card/CardMovie";
 import SearchInput from "../components/common/SearchInput";
+import Loading from "../components/common/Loading";
 
 const Search = () => {
   const [searchParams] = useSearchParams();
@@ -11,7 +12,7 @@ const Search = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const getResults = async () => {
+    const fetchSearchResults = async () => {
       if (query) {
         setLoading(true);
         try {
@@ -28,8 +29,11 @@ const Search = () => {
         }
       }
     };
-    getResults();
+    fetchSearchResults();
   }, [query]);
+
+    if (loading)
+    return <Loading />;
 
   return (
     <div className="min-h-screen bg-black px-5 py-10">

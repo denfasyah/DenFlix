@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { getMovies } from "../../../Services/movieService";
 import HeaderMovieList from "../list/HeaderMovieList";
 import CardMovie from "../card/CardMovie";
+import Loading from "../../common/Loading";
   
 const MovieList = ({ endpoint, title, url }) => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUpcomingMovies = async () => {
+    const fetchMovieList = async () => {
       try {
         const data = await getMovies(endpoint);
         setMovies(data.slice(0, 12));
@@ -19,11 +20,11 @@ const MovieList = ({ endpoint, title, url }) => {
       }
     };
 
-    fetchUpcomingMovies();
+    fetchMovieList();
   }, [endpoint]);
 
   if (loading) {
-    return <div className="text-white">Loading...</div>;
+    return <Loading />;
   }
 
   return (

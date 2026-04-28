@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getMovies } from "../Services/movieService";
 import { Link } from "react-router-dom";
 import CardMovie from "../components/movie/card/CardMovie";
+import Loading from "../components/common/Loading";
 
 const MovieCategory = () => {
   const { category } = useParams();
@@ -14,7 +15,7 @@ const MovieCategory = () => {
   };
 
   useEffect(() => {
-    const fetchAll = async () => {
+    const fetchMoviesByCategory = async () => {
       setLoading(true);
       try {
         const data = await getMovies(category);
@@ -25,11 +26,11 @@ const MovieCategory = () => {
         setLoading(false);
       }
     };
-    fetchAll();
+    fetchMoviesByCategory();
   }, [category]);
 
   if (loading)
-    return <div className="text-white p-10 text-center">Loading...</div>;
+    return <Loading />;
 
   return (
     <div className="min-h-screen bg-black px-5 py-10">

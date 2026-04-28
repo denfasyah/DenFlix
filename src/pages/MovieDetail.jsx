@@ -9,6 +9,7 @@ import MovieCast from "../components/movie/detail/MovieCast";
 import WatchProviders from "../components/movie/detail/WatchProviders";
 import MovieRecommendations from "../components/movie/detail/MovieRecommendations";
 import MovieGallery from "../components/movie/detail/MovieGallery";
+import Loading from "../components/common/Loading";
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -17,7 +18,7 @@ const MovieDetail = () => {
   const imageUrl = import.meta.env.VITE_APP_IMAGEURL;
 
   useEffect(() => {
-    const fetchDetail = async () => {
+    const fetchMovieDetails = async () => {
       try {
         const data = await getMovieDetail(id);
         setMovie(data);
@@ -27,11 +28,11 @@ const MovieDetail = () => {
         setLoading(false);
       }
     };
-    fetchDetail();
+    fetchMovieDetails();
   }, [id]);
 
   if (loading)
-    return <div className="text-white p-10 text-center">Loading...</div>;
+    return <Loading />;
   if (!movie)
     return (
       <div className="text-white p-10 text-center">Film tidak ditemukan.</div>

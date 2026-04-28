@@ -46,7 +46,7 @@ const Navbar = () => {
             <NavList url="/movie/now_playing" title="Now Playing" />
             <NavList url="/movie/popular" title="Popular" />
             <NavList url="/movie/top_rated" title="Top Rated" />
-            <NavList url="/movie/upcoming" title="Coming Soon" />
+            <NavList url="/movie/upcoming" title="Upcoming" />
           </NavDropdown>
 
           <NavDropdown

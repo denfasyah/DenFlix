@@ -19,7 +19,7 @@ const NavMobile = ({ isOpen, onClose }) => {
           <Link to="/movie/now_playing" onClick={onClose} className="text-gray-400 hover:text-denflix-primary">Now Playing</Link>
           <Link to="/movie/popular" onClick={onClose} className="text-gray-400 hover:text-denflix-primary">Popular</Link>
           <Link to="/movie/top_rated" onClick={onClose} className="text-gray-400 hover:text-denflix-primary">Top Rated</Link>
-          <Link to="/movie/coming_soon" onClick={onClose} className="text-gray-400 hover:text-denflix-primary">Coming Soon</Link>
+          <Link to="/movie/upcoming" onClick={onClose} className="text-gray-400 hover:text-denflix-primary">Upcoming</Link>
         </div>
       </div>
 
