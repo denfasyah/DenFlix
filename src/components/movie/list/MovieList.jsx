@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMovies } from "../../../Services/movieService";
-import HeaderMovieList from "../../common/HeaderMovieList";
+import HeaderMovieList from "../list/HeaderMovieList";
 import CardMovie from "../card/CardMovie";
   
 const MovieList = ({ endpoint, title, url }) => {
