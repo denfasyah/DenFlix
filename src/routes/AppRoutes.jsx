@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
-import Trending from "../pages/Trending";
 import Search from "../pages/Search";
 import MovieDetail from "../pages/MovieDetail";
 import MovieCategory from "../pages/MovieCategory";
@@ -10,7 +9,6 @@ const AppRoutes = () => {
     <div>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/trending" element={<Trending />} />
         <Route path="/search" element={<Search />} />
         <Route path="/movie/:category" element={<MovieCategory />} />
         <Route path="/movie/detail/:id" element={<MovieDetail />} />
