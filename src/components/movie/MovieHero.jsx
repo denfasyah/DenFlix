@@ -1,5 +1,5 @@
 import { AiFillStar, AiOutlineClockCircle, AiOutlineCalendar } from "react-icons/ai";
-
+import { Link } from "react-router-dom";
 const MovieHero = ({ movie, imageUrl }) => {
   return (
     <div className="relative h-[70vh] w-full">
@@ -34,9 +34,9 @@ const MovieHero = ({ movie, imageUrl }) => {
 
           <div className="flex flex-wrap justify-center md:justify-start gap-2">
             {movie.genres.map((genre) => (
-              <span key={genre.id} className="bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm transition-colors cursor-default">
+              <Link to={`/genre/${genre.name}`} key={genre.id} className="bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm transition-colors cursor-default">
                 {genre.name}
-              </span>
+              </Link>
             ))}
           </div>
         </div>
