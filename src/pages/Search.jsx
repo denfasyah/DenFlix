@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { searchMovies } from "../Services/movieService";
-import CardMovieList from "../components/movie/CardMovieList";
+import CardMovie from "../components/movie/card/CardMovie";
 import SearchInput from "../components/common/SearchInput";
 
 const Search = () => {
@@ -63,7 +63,7 @@ const Search = () => {
         ) : results.length > 0 ? (
           <div className="bg-denflix-midnight rounded-lg p-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-y-6 justify-items-center">
             {results.map((movie) => (
-              <CardMovieList key={movie.id} movie={movie} />
+              <CardMovie key={movie.id} movie={movie} />
             ))}
           </div>
         ) : (

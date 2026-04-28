@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getMovies } from "../Services/movieService"; // Sesuaikan path file
 import HeroSection from "../components/fragments/HeroSection";
-import MovieList from "../components/movie/MovieList";
+import MovieList from "../components/movie/list/MovieList";
 
 const Home = () => {
   const [nowPlaying, setNowPlaying] = useState([]);

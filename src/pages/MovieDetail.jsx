@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getMovieDetail } from "../Services/movieService";
-import MovieHero from "../components/movie/MovieHero";
-import MovieSynopsis from "../components/movie/MovieSynopsis";
-import MovieInfo from "../components/movie/MovieInfo";
-import MovieTrailer from "../components/movie/MovieTrailer";
-import MovieCast from "../components/movie/MovieCast";
-import WatchProviders from "../components/movie/WatchProviders";
-import MovieRecommendations from "../components/movie/MovieRecommendations";
-import MovieGallery from "../components/movie/MovieGallery";
+import MovieHero from "../components/movie/detail/MovieHero";
+import MovieSynopsis from "../components/movie/detail/MovieSynopsis";
+import MovieInfo from "../components/movie/detail/MovieInfo";
+import MovieTrailer from "../components/movie/detail/MovieTrailer";
+import MovieCast from "../components/movie/detail/MovieCast";
+import WatchProviders from "../components/movie/detail/WatchProviders";
+import MovieRecommendations from "../components/movie/detail/MovieRecommendations";
+import MovieGallery from "../components/movie/detail/MovieGallery";
 
 const MovieDetail = () => {
   const { id } = useParams();

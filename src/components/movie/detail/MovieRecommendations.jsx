@@ -1,4 +1,4 @@
-import CardMovieList from "./CardMovieList";
+import CardMovie from "../card/CardMovie";
 
 const MovieRecommendations = ({ recommendations }) => {
   if (!recommendations || recommendations.length === 0) return null;
@@ -11,7 +11,7 @@ const MovieRecommendations = ({ recommendations }) => {
       
       <div className="carousel carousel-center w-full gap-4 px-5 py-5">
         {recommendations.slice(0, 10).map((movie) => (
-          <CardMovieList key={movie.id} movie={movie} />
+          <CardMovie key={movie.id} movie={movie} />
         ))}
       </div>
     </div>

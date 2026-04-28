@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { AiFillStar } from "react-icons/ai";
 
-const CardMovieList = ({ movie }) => {
+const CardMovie = ({ movie }) => {
   const img = `${import.meta.env.VITE_APP_IMAGEURL}/${movie.poster_path}`;
 
   return (
@@ -33,4 +33,4 @@ const CardMovieList = ({ movie }) => {
   );
 };
 
-export default CardMovieList;
+export default CardMovie;
