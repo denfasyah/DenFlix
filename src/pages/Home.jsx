@@ -1,22 +1,11 @@
-import { useEffect, useState } from "react";
+import useFetch from "../hooks/useFetch";
 import { getMovies } from "../Services/movieService"; // Sesuaikan path file
 import HeroSection from "../components/fragments/HeroSection";
 import MovieList from "../components/movie/list/MovieList";
 
 const Home = () => {
-  const [nowPlaying, setNowPlaying] = useState([]);
+const { data: nowPlaying } = useFetch(() => getMovies("now_playing"));
 
- useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const data = await getMovies("now_playing");
-        setNowPlaying(data); 
-      } catch (error) {
-        console.error("Gagal mengambil data film:", error);
-      }
-    };
-    fetchMovies();
-  }, []);
   return (
     <div>
      <HeroSection movies={nowPlaying} />

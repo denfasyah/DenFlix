@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import useFetch from "../hooks/useFetch";
 import { useSearchParams, Link } from "react-router-dom";
 import { searchMovies } from "../Services/movieService";
 import CardMovie from "../components/movie/card/CardMovie";
@@ -8,32 +8,13 @@ import Loading from "../components/common/Loading";
 const Search = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("q");
-  const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchSearchResults = async () => {
-      if (query) {
-        setLoading(true);
-        try {
-          const data = await searchMovies(query);
+  const { data: results, loading } = useFetch(async () => {
+    const data = await searchMovies(query);
+    return data.filter((movie) => movie.poster_path !== null);
+  }, query);
 
-          const filteredData = data.filter(
-            (movie) => movie.poster_path !== null,
-          );
-          setResults(filteredData);
-        } catch (error) {
-          console.error("Search Error:", error);
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
-    fetchSearchResults();
-  }, [query]);
-
-    if (loading)
-    return <Loading />;
+  if (loading) return <Loading />;
 
   return (
     <div className="min-h-screen bg-black px-5 py-10">

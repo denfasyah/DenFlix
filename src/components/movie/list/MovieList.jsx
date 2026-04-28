@@ -1,31 +1,16 @@
-import { useEffect, useState } from "react";
+import useFetch from "../../../hooks/useFetch";
 import { getMovies } from "../../../Services/movieService";
 import HeaderMovieList from "../list/HeaderMovieList";
 import CardMovie from "../card/CardMovie";
 import Loading from "../../common/Loading";
-  
+
 const MovieList = ({ endpoint, title, url }) => {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { data: movies, loading } = useFetch(async () => {
+    const data = await getMovies(endpoint);
+    return data.slice(0, 12);
+  }, endpoint);
 
-  useEffect(() => {
-    const fetchMovieList = async () => {
-      try {
-        const data = await getMovies(endpoint);
-        setMovies(data.slice(0, 12));
-      } catch (error) {
-        console.error(`Error fetching ${endpoint} movies:`, error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMovieList();
-  }, [endpoint]);
-
-  if (loading) {
-    return <Loading />;
-  }
+  if (loading) return <Loading />;
 
   return (
     <div className="max-w-7xl mx-auto pr-6 ">

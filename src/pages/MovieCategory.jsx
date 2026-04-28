@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import useFetch from "../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import { getMovies } from "../Services/movieService";
 import { Link } from "react-router-dom";
@@ -7,30 +7,16 @@ import Loading from "../components/common/Loading";
 
 const MovieCategory = () => {
   const { category } = useParams();
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { data: movies, loading } = useFetch(
+    () => getMovies(category),
+    category,
+  );
+
+  if (loading) return <Loading />;
 
   const formatTitle = (slug) => {
     return slug.replace("_", " ").replace(/\b\w/g, (c) => c.toUpperCase());
   };
-
-  useEffect(() => {
-    const fetchMoviesByCategory = async () => {
-      setLoading(true);
-      try {
-        const data = await getMovies(category);
-        setMovies(data);
-      } catch (error) {
-        console.error("Error fetching category:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchMoviesByCategory();
-  }, [category]);
-
-  if (loading)
-    return <Loading />;
 
   return (
     <div className="min-h-screen bg-black px-5 py-10">
@@ -43,7 +29,7 @@ const MovieCategory = () => {
             <p className="text-gray-400 text-sm mt-1">
               Menampilkan semua koleksi {formatTitle(category)}
             </p>
-           <Link
+            <Link
               to="/"
               className="text-sm font-medium text-gray-400 hover:text-denflix-primary transition-all flex items-center gap-2"
             >

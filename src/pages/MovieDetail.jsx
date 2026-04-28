@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import useFetch from "../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import { getMovieDetail } from "../Services/movieService";
 import MovieHero from "../components/movie/detail/MovieHero";
@@ -13,30 +13,12 @@ import Loading from "../components/common/Loading";
 
 const MovieDetail = () => {
   const { id } = useParams();
-  const [movie, setMovie] = useState(null);
-  const [loading, setLoading] = useState(true);
   const imageUrl = import.meta.env.VITE_APP_IMAGEURL;
 
-  useEffect(() => {
-    const fetchMovieDetails = async () => {
-      try {
-        const data = await getMovieDetail(id);
-        setMovie(data);
-      } catch (error) {
-        console.error("Gagal memuat detail:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchMovieDetails();
-  }, [id]);
+  const { data: movie, loading } = useFetch(() => getMovieDetail(id), id);
 
   if (loading)
     return <Loading />;
-  if (!movie)
-    return (
-      <div className="text-white p-10 text-center">Film tidak ditemukan.</div>
-    );
 
   const providers = movie["watch/providers"]?.results?.ID;
   const streaming = providers?.flatrate || [];
