@@ -3,6 +3,7 @@ import { getMovies } from "../Services/movieService"; // Sesuaikan path file
 import HeroSection from "../components/fragments/HeroSection";
 import Trending from "../components/common/Trending";
 import MovieList from "../components/movie/list/MovieList";
+import TvList from "../components/Tv/list/TvList";
 import Genre from "../components/common/Genre";
 import ExclusiveBanner from "../components/common/ExclusiveBanner";
 
@@ -20,17 +21,11 @@ const Home = () => {
         endpoint="now_playing"
         url="/movie/now_playing"
       />
-      {/* <MovieList
-        title="Top Rated"
-        endpoint="top_rated"
-        url="/movie/top_rated"
-      /> */}
-
       <ExclusiveBanner />
-      <MovieList
-        title="Now Playing"
-        endpoint="now_playing"
-        url="/movie/now_playing"
+      <TvList
+        title="Airing Today Tv"
+        endpoint="airing_today"
+        url="/tv/airing_today"
       />
     </div>
   );

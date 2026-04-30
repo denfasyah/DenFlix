@@ -10,6 +10,16 @@ export const getMovies = async (endpoint) => {
   }
 };
 
+export const getTvShows = async (endpoint) => {
+  try {
+    const response = await api.get(`/tv/${endpoint}`);
+    return response.data.results;
+  } catch (error) {
+    console.error(`Error fetching ${endpoint} TV shows:`, error);
+    throw error;
+  }
+};
+
 export const getMovieDetail = async (id) => {
   try {
     const response = await api.get(`/movie/${id}?append_to_response=videos,credits,watch/providers,recommendations,images`);
@@ -30,8 +40,6 @@ export const searchMovies = async (query) => {
   }
 };
 
-// Mengambil list genre berdasarkan tipe (movie atau tv)
-// Mengambil list genre berdasarkan tipe (movie atau tv)
 export const getGenres = async (type = "movie") => {
   try {
     const response = await api.get(`/genre/${type}/list`);
