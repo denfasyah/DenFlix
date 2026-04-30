@@ -30,22 +30,26 @@ export const searchMovies = async (query) => {
   }
 };
 
-export const getGenres = async () => {
+// Mengambil list genre berdasarkan tipe (movie atau tv)
+// Mengambil list genre berdasarkan tipe (movie atau tv)
+export const getGenres = async (type = "movie") => {
   try {
-    const response = await api.get(`genre/movie/list`);
+    const response = await api.get(`/genre/${type}/list`);
     return response.data.genres;
   } catch (error) {
-    console.error("Error fetching genre movies:", error);
+    console.error(`Error fetching ${type} genres:`, error);
     throw error;
   }
 };
 
-export const getMoviesByGenre = async (genreId) => {
+export const getDiscoverByGenre = async (type, genreId) => {
   try {
-    const response = await api.get(`/discover/movie?with_genres=${genreId}`);
+    const response = await api.get(`/discover/${type}`, {
+      params: { with_genres: genreId }
+    });
     return response.data.results;
   } catch (error) {
-    console.error("Error fetching movies by genre:", error);
+    console.error(`Error fetching discover ${type}:`, error);
     throw error;
   }
 };

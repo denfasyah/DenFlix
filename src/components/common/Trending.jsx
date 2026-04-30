@@ -19,8 +19,8 @@ const Trending = () => {
   return (
     <div className="max-w-full mx-auto">
       <div className="bg-denflix-midnight rounded-lg">
-        <div className="flex flex-row md:flex-row md:items-center gap-4 pt-2">
-          <h2 className="text-denflix-primary mx-5 mt-1 text-2xl font-bold uppercase tracking-tight">
+        <div className="flex just flex-row md:flex-row md:items-center gap-4 px-4 pt-2">
+          <h2 className="text-denflix-primary mt-1 text-2xl font-bold tracking-tight">
             Trending
           </h2>
 

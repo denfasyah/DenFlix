@@ -16,15 +16,16 @@ const Home = () => {
       <Genre />
       <MovieList title="Upcoming" endpoint="upcoming" url="/movie/upcoming" />
       <MovieList
-        title="Top Rated"
-        endpoint="top_rated"
-        url="/movie/top_rated"
-      />
-      <MovieList
         title="Now Playing"
         endpoint="now_playing"
         url="/movie/now_playing"
       />
+      {/* <MovieList
+        title="Top Rated"
+        endpoint="top_rated"
+        url="/movie/top_rated"
+      /> */}
+
       <ExclusiveBanner />
       <MovieList
         title="Now Playing"

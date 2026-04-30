@@ -1,30 +1,39 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams, Link } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
-import { getMoviesByGenre } from "../Services/movieService";
+import { getDiscoverByGenre, getGenres } from "../Services/movieService";
 import CardMovie from "../components/movie/card/CardMovie";
 import Loading from "../components/common/Loading";
-import { Link } from "react-router-dom";
-import { getGenres } from "../Services/movieService";
 
 const GenrePage = () => {
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const type = searchParams.get("type") || "movie";
 
-  const { data: movies, loading } = useFetch(() => getMoviesByGenre(id), id);
-  const { data: genres } = useFetch(getGenres);
-  const currentGenre = genres?.find((g) => g.id === Number(id));
-  if (loading) return <Loading />;
+  const { data, loading } = useFetch(async () => {
+    const [movieResults, genreList] = await Promise.all([
+      getDiscoverByGenre(type, id),
+      getGenres(type),
+    ]);
+
+    return {
+      movies: movieResults,
+      currentGenre: genreList.find((g) => g.id === Number(id)),
+    };
+  }, [id, type]);
+
+  if (loading && !data) return <Loading />;
 
   return (
     <div className="min-h-screen bg-black px-5 py-10">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-10 border-b border-gray-800 pb-4">
-         <h1 className="text-denflix-primary text-3xl font-bold">
-           Genre {currentGenre ? currentGenre.name : "Movies"}
+      <div className="max-w-7xl mx-auto md:pr-6">
+        <div className="px-4">
+          <h1 className="text-denflix-primary text-3xl font-bold mb-2">
+            {data?.currentGenre?.name || "Genre"}
           </h1>
-          
-          <div className="flex justify-between">
-            <p className="text-gray-400 text-sm">
-              Menampilkan semua koleksi film {currentGenre?.name}
+          <div className="mb-5 border-b border-gray-800 pb-6 flex flex-row md:flex-row justify-between items-start md:items-end gap-4">
+            <p className="text-gray-500 text-sm mt-2 font-medium">
+              koleksi <span className="text-white uppercase">{type}</span> untuk
+              genre {data?.currentGenre?.name}.
             </p>
             <Link
               to="/"
@@ -34,9 +43,11 @@ const GenrePage = () => {
             </Link>
           </div>
         </div>
+
+        {/* Grid List */}
         <div className="bg-denflix-midnight rounded-lg p-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-y-6 justify-items-center">
-          {movies.map((movie) => (
-            <CardMovie key={movie.id} movie={movie} />
+          {data?.movies?.map((item) => (
+            <CardMovie key={item.id} movie={item} />
           ))}
         </div>
       </div>
