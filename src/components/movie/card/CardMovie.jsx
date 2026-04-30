@@ -3,7 +3,7 @@ import { AiFillStar } from "react-icons/ai";
 
 const CardMovie = ({ movie }) => {
   const img = `${import.meta.env.VITE_APP_IMAGEURL}/${movie.poster_path}`;
-
+  const displayTitle = movie.title || movie.name || "Untitled";
   return (
     <div className="carousel-item">
       <Link
@@ -24,7 +24,7 @@ const CardMovie = ({ movie }) => {
           />
           <div className="absolute flex items-center justify-center w-full h-full inset-0 bg-gradient-to-b from-50% from-transparent to-black rounded-md">
             <h3 className="absolute bottom-2 text-center text-white line-clamp-1 hover:line-clamp-none transition-all duration-300 ease-in-out">
-              {movie.title}
+              {displayTitle}
             </h3>
           </div>
         </div>

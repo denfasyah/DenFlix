@@ -16,8 +16,8 @@ const HeroSection = ({ movies }) => {
 
       setTimeout(() => {
         // 2. Ganti index gambar
-        setCurrentIndex((prevIndex) => 
-          prevIndex === movies.length - 1 ? 0 : prevIndex + 1
+        setCurrentIndex((prevIndex) =>
+          prevIndex === movies.length - 1 ? 0 : prevIndex + 1,
         );
         // 3. Mulai animasi masuk (fade in)
         setFade(true);
@@ -30,10 +30,11 @@ const HeroSection = ({ movies }) => {
   // Mengambil path gambar berdasarkan index saat ini
   const currentBackdrop = movies?.[currentIndex]?.backdrop_path;
 
-  if (!currentBackdrop) return <div className="h-[40vh] md:h-[60vh] bg-[#0a0a0a]" />;
+  if (!currentBackdrop)
+    return <div className="h-[40vh] md:h-[60vh] bg-[#0a0a0a]" />;
 
   return (
-    <div className="hero h-[40vh] md:h-[60vh] relative overflow-hidden mb-10">
+    <div className="hero h-[40vh] md:h-[45vh] relative overflow-hidden">
       {/* --- BACKDROP SYSTEM DENGAN ANIMASI --- */}
       <div className="absolute inset-0 bg-[#0a0a0a]">
         <img
@@ -43,26 +44,27 @@ const HeroSection = ({ movies }) => {
             fade ? "opacity-60 translate-x-0" : "opacity-0 -translate-x-4"
           }`}
         />
-        
-        {/* Layered Gradients untuk Depth */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-black/80 to-transparent"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-transparent to-[#0a0a0a]"></div>
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+        {/* Layered Gradients untuk Depth */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-black/40 to-transparent"></div>
+        {/* <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-transparent to-[#0a0a0a]"></div> */}
+
+        {/* <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div> */}
       </div>
 
       {/* --- CONTENT SECTION --- */}
-      <div className="hero-content relative z-10 text-center px-4">
+      <div className="hero-content relative z-10 text-center px-4 mt-5">
         <div className="max-w-3xl">
           <h1 className="mb-6 px-5 text-3xl md:text-6xl font-black text-white uppercase tracking-tighter italic drop-shadow-2xl">
-            Explore Your <span className="text-denflix-primary">Favorite</span> Movies
+            Explore Your <span className="text-denflix-primary">Favorite</span>{" "}
+            Movies
           </h1>
 
           <SearchInput />
 
-          <p className="mt-6 text-xs md:text-sm text-gray-400 uppercase tracking-[0.3em] font-medium">
+          {/* <p className="mt-6 text-xs md:text-sm text-gray-400 uppercase tracking-[0.3em] font-medium">
             Trending now on <span className="text-white">DenFlix</span>
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

@@ -50,4 +50,14 @@ export const getMoviesByGenre = async (genreId) => {
   }
 };
 
+export const getTrending = async (type = 'all', time = 'day') => {
+  try {
+    const response = await api.get(`/trending/${type}/${time}`);
+    return response.data.results;
+  } catch (error) {
+    console.error(`Error fetching trending ${type}:`, error);
+    throw error;
+  }
+};
+
   
