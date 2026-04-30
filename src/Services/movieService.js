@@ -20,6 +20,16 @@ export const getTvShows = async (endpoint) => {
   }
 };
 
+export const getTvShowDetail = async (id) => {
+  try {
+    const response = await api.get(`/tv/${id}?append_to_response=videos,credits,watch/providers,recommendations,images`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching TV show detail:", error);
+    throw error;
+  }
+};
+
 export const getMovieDetail = async (id) => {
   try {
     const response = await api.get(`/movie/${id}?append_to_response=videos,credits,watch/providers,recommendations,images`);

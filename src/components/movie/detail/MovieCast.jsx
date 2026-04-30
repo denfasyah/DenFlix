@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-const MovieCast = ({ movie, imageUrl, handleImageError }) => {
+const MovieCast = ({ data, imageUrl, handleImageError }) => {
   return (
     <div className="mt-12 max-w-6xl mx-auto px-8">
       <h2 className="text-2xl font-bold text-denflix-primary mb-6">Cast</h2>
 
       <div className="carousel carousel-center w-full gap-4 px-5 py-5">
-        {movie.credits?.cast?.length > 0 ? (
-          movie.credits.cast
+        {data.credits?.cast?.length > 0 ? (
+          data.credits.cast
             .filter((person) => person.profile_path !== null)
             .map((person) => (
               <div

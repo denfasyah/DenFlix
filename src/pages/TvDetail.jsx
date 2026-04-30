@@ -1,6 +1,6 @@
-import useFetch from "../hooks/useFetch";
 import { useParams } from "react-router-dom";
-import { getMovieDetail } from "../Services/movieService";
+import useFetch from "../hooks/UseFetch";
+import { getTvShowDetail } from "../Services/movieService";
 import Loading from "../components/common/Loading";
 import MovieHero from "../components/movie/detail/MovieHero";
 import MovieSynopsis from "../components/movie/detail/MovieSynopsis";
@@ -10,20 +10,18 @@ import MovieTrailer from "../components/movie/detail/MovieTrailer";
 import MovieCast from "../components/movie/detail/MovieCast";
 import MovieGallery from "../components/movie/detail/MovieGallery";
 import MovieRecommendations from "../components/movie/detail/MovieRecommendations";
-const MovieDetail = () => {
+
+const TvDetail = () => {
   const { id } = useParams();
+  const { data: tv, loading } = useFetch(() => getTvShowDetail(id), id);
   const imageUrl = import.meta.env.VITE_APP_IMAGEURL;
 
-  const { data: movie, loading } = useFetch(() => getMovieDetail(id), id);
-
-  if (loading)
-    return <Loading />;
-
-  const providers = movie["watch/providers"]?.results?.ID;
+  if (loading) return <Loading />;
+  if (!tv) return null;
+  const providers = tv["watch/providers"]?.results?.ID;
   const streaming = providers?.flatrate || [];
   const buyOrRent = providers?.buy || providers?.rent || [];
-
-  const trailer = movie.videos?.results?.find(
+  const trailer = tv.videos?.results?.find(
     (vid) => vid.type === "Trailer" && vid.site === "YouTube",
   );
 
@@ -34,17 +32,15 @@ const MovieDetail = () => {
       autoplay: 0,
     },
   };
-
   const handleImageError = (e) => {
     e.target.src = "https://via.placeholder.com/300x450?text=No+Image";
   };
-
   return (
     <div className="min-h-screen bg-black text-white pb-20">
-      <MovieHero data={movie} imageUrl={imageUrl} />
+      <MovieHero data={tv} imageUrl={import.meta.env.VITE_APP_IMAGEURL} />
       <div className="max-w-6xl mx-auto px-8 mt-12 grid grid-cols-1 md:grid-cols-3 gap-12">
         <div className="md:col-span-2">
-          <MovieSynopsis data={movie} />
+          <MovieSynopsis data={tv} />
           <WatchProviders
             streaming={streaming}
             buyOrRent={buyOrRent}
@@ -52,23 +48,22 @@ const MovieDetail = () => {
             imageUrl={imageUrl}
           />
         </div>
-        <MovieInfo data={movie} />
+        <MovieInfo data={tv} />
       </div>
       <MovieTrailer trailer={trailer} opts={opts} />
       <MovieCast
-        data={movie}
+        data={tv}
         imageUrl={imageUrl}
         handleImageError={handleImageError}
       />
       <MovieGallery
-        images={movie.images}
-        videos={movie.videos}
+        images={tv.images}
+        videos={tv.videos}
         imageUrl={imageUrl}
       />
-      <MovieRecommendations recommendations={movie.recommendations?.results} />
+      <MovieRecommendations recommendations={tv.recommendations?.results} />
     </div>
   );
 };
 
-export default MovieDetail;
-
+export default TvDetail;
