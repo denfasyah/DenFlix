@@ -4,6 +4,7 @@ import HeroSection from "../components/fragments/HeroSection";
 import Trending from "../components/common/Trending";
 import MovieList from "../components/movie/list/MovieList";
 import Genre from "../components/common/Genre";
+import ExclusiveBanner from "../components/common/ExclusiveBanner";
 
 const Home = () => {
   const { data: nowPlaying } = useFetch(() => getMovies("now_playing"));
@@ -24,7 +25,12 @@ const Home = () => {
         endpoint="now_playing"
         url="/movie/now_playing"
       />
-      <MovieList title="Popular" endpoint="popular" url="/movie/popular" />
+      <ExclusiveBanner />
+      <MovieList
+        title="Now Playing"
+        endpoint="now_playing"
+        url="/movie/now_playing"
+      />
     </div>
   );
 };
