@@ -8,7 +8,8 @@ const MovieHero = ({ data, imageUrl }) => {
   const displayTitle = data.title || data.name || "Untitled";
   const releaseDate = data.release_date || data.first_air_date || "Untitled";
   const duration = data.runtime || data.last_episode_to_air?.runtime|| "N/A";
-
+const isTv = !!data.name || !!data.first_air_date;
+const currentType = isTv ? "tv" : "movie";
   return (
     <div className="relative h-[70vh] w-full">
       <img
@@ -54,7 +55,7 @@ const MovieHero = ({ data, imageUrl }) => {
           <div className="flex flex-wrap justify-center md:justify-start gap-2">
             {data.genres.map((genre) => (
               <Link
-                to={`/genre/${genre.id}`}
+                to={`/genre/${genre.id}?type=${currentType}`}
                 key={genre.id}
                 className="bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm transition-colors cursor-default text-white"
               >
