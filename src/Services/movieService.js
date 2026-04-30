@@ -40,4 +40,14 @@ export const getGenres = async () => {
   }
 };
 
+export const getMoviesByGenre = async (genreId) => {
+  try {
+    const response = await api.get(`/discover/movie?with_genres=${genreId}`);
+    return response.data.results;
+  } catch (error) {
+    console.error("Error fetching movies by genre:", error);
+    throw error;
+  }
+};
+
   

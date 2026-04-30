@@ -1,33 +1,30 @@
-import useFetch from "../hooks/useFetch";
 import { useParams } from "react-router-dom";
-import { getMovies } from "../Services/movieService";
-import { Link } from "react-router-dom";
+import useFetch from "../hooks/useFetch";
+import { getMoviesByGenre } from "../Services/movieService";
 import CardMovie from "../components/movie/card/CardMovie";
 import Loading from "../components/common/Loading";
+import { Link } from "react-router-dom";
+import { getGenres } from "../Services/movieService";
 
-const MovieCategory = () => {
-  const { category } = useParams();
-  const { data: movies, loading } = useFetch(
-    () => getMovies(category),
-    category,
-  );
+const GenrePage = () => {
+  const { id } = useParams();
 
+  const { data: movies, loading } = useFetch(() => getMoviesByGenre(id), id);
+  const { data: genres } = useFetch(getGenres);
+  const currentGenre = genres?.find((g) => g.id === Number(id));
   if (loading) return <Loading />;
-
-  const formatTitle = (slug) => {
-    return slug.replace("_", " ").replace(/\b\w/g, (c) => c.toUpperCase());
-  };
 
   return (
     <div className="min-h-screen bg-black px-5 py-10">
       <div className="max-w-7xl mx-auto">
         <div className="mb-10 border-b border-gray-800 pb-4">
-          <h1 className="text-denflix-primary text-3xl font-bold">
-            {formatTitle(category)}
+         <h1 className="text-denflix-primary text-3xl font-bold">
+           Genre {currentGenre ? currentGenre.name : "Movies"}
           </h1>
+          
           <div className="flex justify-between">
-            <p className="text-gray-400 text-sm mt-1">
-              Menampilkan semua koleksi {formatTitle(category)}
+            <p className="text-gray-400 text-sm">
+              Menampilkan semua koleksi film {currentGenre?.name}
             </p>
             <Link
               to="/"
@@ -47,4 +44,4 @@ const MovieCategory = () => {
   );
 };
 
-export default MovieCategory;
+export default GenrePage;

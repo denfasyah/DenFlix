@@ -34,7 +34,7 @@ const MovieHero = ({ movie, imageUrl }) => {
 
           <div className="flex flex-wrap justify-center md:justify-start gap-2">
             {movie.genres.map((genre) => (
-              <Link to={`/genre/${genre.name}`} key={genre.id} className="bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm transition-colors cursor-default">
+              <Link to={`/genre/${genre.id}`} key={genre.id} className="bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm transition-colors cursor-default">
                 {genre.name}
               </Link>
             ))}
