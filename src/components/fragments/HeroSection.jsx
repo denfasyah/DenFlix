@@ -71,8 +71,8 @@ const HeroSection = ({ movies }) => {
             Explore Your <br />
             {/* Flex container dengan width stabil */}
             <div className="flex justify-center items-center gap-3 min-h-[1.2em] w-full">
-              <span className="text-denflix-primary">Favorite</span>
-              <div className="text-white flex items-center">
+              <span className="text-denflix-primary italic">Favorite</span>
+              <div className="text-white flex items-center italic">
                 {displayText}
                 <span className="inline-block w-1 h-8 md:h-12 bg-denflix-primary ml-2 animate-pulse"></span>
               </div>

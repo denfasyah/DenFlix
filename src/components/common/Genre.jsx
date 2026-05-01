@@ -39,7 +39,7 @@ const GenrePills = () => {
             <Link
               key={genre.id}
               to={`/genre/${genre.id}?type=${activeType}`}
-              className="px-6 py-2 rounded-full border border-white/10 bg-white/5 text-white text-sm font-medium hover:bg-denflix-primary hover:text-black transition-all whitespace-nowrap active:scale-95"
+              className="px-6 py-2 rounded-bl-xl rounded-tr-xl border border-white/10 bg-white/5 text-white text-sm font-medium hover:bg-denflix-primary hover:text-black transition-all whitespace-nowrap active:scale-95"
             >
               {genre.name}
             </Link>
