@@ -9,6 +9,7 @@ const HeroSection = ({ movies }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   
   const imageUrl = import.meta.env.VITE_APP_IMAGEURL;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const words = ["Movie", "TV", "Cast"];
   const typingSpeed = isDeleting ? 50 : 150;
 
@@ -30,7 +31,7 @@ const HeroSection = ({ movies }) => {
     };
     const timer = setTimeout(handleType, typingSpeed);
     return () => clearTimeout(timer);
-  }, [displayText, isDeleting, wordIndex]);
+  }, [displayText, isDeleting, typingSpeed, wordIndex, words]);
 
   useEffect(() => {
     if (!movies || movies.length === 0) return;

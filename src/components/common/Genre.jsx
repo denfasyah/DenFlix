@@ -11,7 +11,7 @@ const GenrePills = () => {
 
   return (
     <div className="max-w-7xl mx-auto md:pr-6">
-      <div className="bg-denflix-midnight rounded-lg mt-5">
+      <div className="bg-denflix-midnight rounded-lg mt-10">
         <div className="flex flex-row md:flex-row md:items-center gap-4 px-4 pt-2">
           <h2 className="text-denflix-primary font-semibold text-2xl tracking-wide">
             Genre

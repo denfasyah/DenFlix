@@ -3,7 +3,7 @@ import { Bookmark, MessageCircle, Star, ShieldCheck } from "lucide-react";
 
 const ExclusiveBanner = () => {
   return (
-    <section className="max-w-7xl mx-auto px-5 md:px-0 md:pr-6 mt-5 mb-10">
+    <section className="max-w-7xl mx-auto px-5 md:px-0 md:pr-6 mt-10">
       <div className="relative group overflow-hidden rounded-3xl md:rounded-none md:rounded-tl-[2.5rem] md:rounded-br-[2.5rem] bg-[#0a0a0a] border border-white/5 p-8 md:p-12 shadow-2xl">
         <div className="absolute -top-24 -left-24 w-72 h-72 md:w-96 md:h-96 bg-denflix-primary/10 rounded-full blur-[100px] md:blur-[120px] group-hover:bg-denflix-primary/20 transition-all duration-700"></div>
         <div className="absolute -bottom-24 -right-24 w-72 h-72 md:w-96 md:h-96 bg-yellow-600/10 rounded-full blur-[100px] md:blur-[120px]"></div>
