@@ -9,6 +9,7 @@ import NotFound from "../pages/NotFound";
 import GenrePage from "../pages/GenrePage";
 import TvDetail from "../pages/TvDetail";
 import TvCategory from "../pages/TvCategory";
+import CastCategory from "../pages/CastCategory";
 
 const AppRoutes = () => {
   return (
@@ -22,6 +23,7 @@ const AppRoutes = () => {
             <Route path="/genre/:id" element={<GenrePage />} />
             <Route path="/tv/:category" element={<TvCategory />} />
             <Route path="/tv/detail/:id" element={<TvDetail />} />
+            <Route path="/person/:category" element={<CastCategory />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
