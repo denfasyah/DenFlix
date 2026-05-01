@@ -28,7 +28,7 @@ const getCleanQuery = (text) => text.trim();
       <form onSubmit={handleSearch} className="relative group">
         <input
           type="text"
-          placeholder="Search for movies..."
+          placeholder="Search for movie, tv, cast..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className={`w-full py-4 md:py-5 px-6 pl-14 rounded-full bg-white/10 backdrop-blur-md border ${

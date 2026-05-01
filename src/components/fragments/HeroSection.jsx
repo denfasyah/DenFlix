@@ -3,68 +3,86 @@ import SearchInput from "../common/SearchInput";
 
 const HeroSection = ({ movies }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [fade, setFade] = useState(true); // Untuk kontrol animasi fade
+  const [fade, setFade] = useState(true);
+  const [displayText, setDisplayText] = useState("");
+  const [wordIndex, setWordIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  
   const imageUrl = import.meta.env.VITE_APP_IMAGEURL;
+  const words = ["Movie", "TV", "Cast"];
+  const typingSpeed = isDeleting ? 50 : 150;
+
+  useEffect(() => {
+    const currentFullWord = words[wordIndex];
+    const handleType = () => {
+      if (!isDeleting) {
+        setDisplayText(currentFullWord.substring(0, displayText.length + 1));
+        if (displayText === currentFullWord) {
+          setTimeout(() => setIsDeleting(true), 2000);
+        }
+      } else {
+        setDisplayText(currentFullWord.substring(0, displayText.length - 1));
+        if (displayText === "") {
+          setIsDeleting(false);
+          setWordIndex((prev) => (prev + 1) % words.length);
+        }
+      }
+    };
+    const timer = setTimeout(handleType, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [displayText, isDeleting, wordIndex]);
 
   useEffect(() => {
     if (!movies || movies.length === 0) return;
-
-    // Timer untuk mengganti gambar setiap 5 detik
     const interval = setInterval(() => {
-      // 1. Mulai animasi keluar (fade out) sedikit sebelum ganti gambar
       setFade(false);
-
       setTimeout(() => {
-        // 2. Ganti index gambar
-        setCurrentIndex((prevIndex) =>
-          prevIndex === movies.length - 1 ? 0 : prevIndex + 1,
-        );
-        // 3. Mulai animasi masuk (fade in)
+        setCurrentIndex((prev) => (prev === movies.length - 1 ? 0 : prev + 1));
         setFade(true);
-      }, 700); // Durasi ini harus sinkron dengan durasi transisi CSS
-    }, 5000); // 5000ms = 5 detik
-
+      }, 700);
+    }, 7000);
     return () => clearInterval(interval);
   }, [movies]);
 
-  // Mengambil path gambar berdasarkan index saat ini
   const currentBackdrop = movies?.[currentIndex]?.backdrop_path;
 
-  if (!currentBackdrop)
-    return <div className="h-[40vh] md:h-[60vh] bg-[#0a0a0a]" />;
+  if (!currentBackdrop) return <div className="h-[60vh] bg-[#0a0a0a]" />;
 
   return (
-    <div className="hero h-[40vh] md:h-[45vh] relative overflow-hidden">
-      {/* --- BACKDROP SYSTEM DENGAN ANIMASI --- */}
+    // Height ditingkatkan agar full ke belakang navbar, pt-32 agar teks tidak tertutup
+    <div className="hero min-h-[40vh] md:h-[60vh] relative overflow-hidden -mt-20  ">
       <div className="absolute inset-0 bg-[#0a0a0a]">
         <img
           src={`${imageUrl}/${currentBackdrop}`}
           alt="Hero Backdrop"
           className={`w-full h-full object-cover transform scale-105 transition-all duration-1000 ease-in-out ${
-            fade ? "opacity-60 translate-x-0" : "opacity-0 -translate-x-4"
+            fade ? "opacity-40 translate-x-0" : "opacity-0"
           }`}
         />
-
-        {/* Layered Gradients untuk Depth */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-black/40 to-transparent"></div>
-        {/* <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-transparent to-[#0a0a0a]"></div> */}
-
-        {/* <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div> */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent"></div>
       </div>
 
-      {/* --- CONTENT SECTION --- */}
-      <div className="hero-content relative z-10 text-center px-4 mt-5">
-        <div className="max-w-3xl">
-          <h1 className="mb-6 px-5 text-3xl md:text-6xl font-black text-white uppercase tracking-tighter italic drop-shadow-2xl">
-            Explore Your <span className="text-denflix-primary">Favorite</span>{" "}
-            Movies
+      <div className="hero-content relative z-10 text-center px-4 w-full mt-24">
+        {/* Kontainer Utama dikunci lebarnya */}
+        <div className="max-w-4xl mx-auto w-full flex flex-col items-center">
+          
+          <h1 className="mb-10 text-3xl md:text-6xl font-black text-white uppercase tracking-tighter italic leading-tight">
+            Explore Your <br />
+            {/* Flex container dengan width stabil */}
+            <div className="flex justify-center items-center gap-3 min-h-[1.2em] w-full">
+              <span className="text-denflix-primary">Favorite</span>
+              <div className="text-white flex items-center">
+                {displayText}
+                <span className="inline-block w-1 h-8 md:h-12 bg-denflix-primary ml-2 animate-pulse"></span>
+              </div>
+            </div>
           </h1>
 
-          <SearchInput />
+          {/* Wrapper SearchInput untuk memastikan lebarnya tetap */}
+          <div className="w-full max-w-xl">
+            <SearchInput />
+          </div>
 
-          {/* <p className="mt-6 text-xs md:text-sm text-gray-400 uppercase tracking-[0.3em] font-medium">
-            Trending now on <span className="text-white">DenFlix</span>
-          </p> */}
         </div>
       </div>
     </div>
