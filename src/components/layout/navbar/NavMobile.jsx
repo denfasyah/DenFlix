@@ -7,7 +7,7 @@ const NavMobile = ({ isOpen, onClose }) => {
   return (
     <div className="lg:hidden absolute top-20 left-0 w-full bg-denflix-secondary border-t border-white/10 p-5 flex flex-col gap-4 shadow-2xl animate-fade-in-down z-[90]">
       {/* Home Link */}
-      <NavMobileLink to="/" title="Home" onClick={onClose} />
+      <NavMobileLink url="/" title="Home" onClick={onClose} />
 
       {/* Movies Collapse */}
       <div className="collapse collapse-arrow bg-transparent">
@@ -38,8 +38,7 @@ const NavMobile = ({ isOpen, onClose }) => {
       </div>
 
       {/* Static Links */}
-      <NavMobileLink to="/cast" title="Cast" onClick={onClose} />
-      <NavMobileLink to="/awards" title="Awards" onClick={onClose} />
+      <NavMobileLink url="/person/popular" title="Popular Cast" onClick={onClose} />
     </div>
   );
 };

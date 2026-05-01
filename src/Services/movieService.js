@@ -60,12 +60,12 @@ export const getCastDetail = async (id) => {
   }
 };
 
-export const searchMovies = async (query) => {
+export const searchMulti = async (query) => {
   try {
-    const response = await api.get(`/search/movie?query=${query}`);
+    const response = await api.get(`/search/multi?query=${query}`);
     return response.data.results;
   } catch (error) {
-    console.error("Error searching movies:", error);
+    console.error("Error searching multi content:", error);
     throw error;
   }
 };

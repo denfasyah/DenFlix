@@ -34,7 +34,7 @@ const CastDetail = () => {
 
   return (
     <div className="min-h-screen bg-black text-white px-4 md:px-8 py-10">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         
         <div className="flex flex-col lg:flex-row gap-8 md:gap-12 mb-16 items-center lg:items-start">
           
@@ -47,7 +47,7 @@ const CastDetail = () => {
           </div>
 
           <div className="flex-1 text-center lg:text-left">
-            <h1 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-denflix-primary mb-4">
+            <h1 className="text-4xl md:text-6xl font-extrabold mb-4 text-denflix-primary">
               {person.name}
             </h1>
             
@@ -77,10 +77,10 @@ const CastDetail = () => {
         </div>
 
 
-        <div className="border-t border-white/10 pt-12">
+        <div className="border-t border-white/10 pt-4">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
             <div>
-              <h2 className="text-3xl font-black italic uppercase text-white tracking-tight">
+              <h2 className="text-3xl font-black mb-2 text-white tracking-tight">
                 Filmography
               </h2>
               <p className="text-denflix-primary text-sm font-bold tracking-widest uppercase">

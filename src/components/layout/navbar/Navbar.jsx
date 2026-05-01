@@ -61,14 +61,8 @@ const Navbar = () => {
           </NavDropdown>
 
           <NavLink
-            url="/cast"
-            title="Cast"
-            navLinkStyle={navLinkStyle}
-            underlineStyle={underlineStyle}
-          />
-          <NavLink
-            url="/awards"
-            title="Awards"
+            url="/person/popular"
+            title="Popular Cast"
             navLinkStyle={navLinkStyle}
             underlineStyle={underlineStyle}
           />
