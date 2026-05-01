@@ -50,6 +50,16 @@ export const getMovieDetail = async (id) => {
   }
 };
 
+export const getCastDetail = async (id) => {
+  try {
+    const response = await api.get(`/person/${id}?append_to_response=combined_credits,images`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching cast detail:", error);
+    throw error;
+  }
+};
+
 export const searchMovies = async (query) => {
   try {
     const response = await api.get(`/search/movie?query=${query}`);

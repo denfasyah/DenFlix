@@ -13,7 +13,7 @@ const CardMovie = ({ movie }) => {
   
 
   const linkCard = isPerson 
-    ? `/cast/${movie.id}` 
+    ? `/person/detail/${movie.id}` 
     : isTv ? `/tv/detail/${movie.id}` : `/movie/detail/${movie.id}`;
 
   return (
