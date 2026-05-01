@@ -6,6 +6,7 @@ import MovieList from "../components/movie/list/MovieList";
 import TvList from "../components/Tv/list/TvList";
 import Genre from "../components/common/Genre";
 import ExclusiveBanner from "../components/common/ExclusiveBanner";
+import CastList from "../components/cast/list/CastList";
 
 const Home = () => {
   const { data: nowPlaying } = useFetch(() => getMovies("now_playing"));
@@ -27,6 +28,13 @@ const Home = () => {
         endpoint="airing_today"
         url="/tv/airing_today"
       />
+
+       <CastList
+        title="Popular Cast"
+        endpoint="popular"
+        url="/person/popular"
+      />
+
     </div>
   );
 };
