@@ -1,21 +1,23 @@
 import useFetch from "../hooks/useFetch";
 import { useParams } from "react-router-dom";
-import { getMovies } from "../Services/movieService";
+import { getTvShows } from "../Services/movieService";
 // import { Link } from "react-router-dom";
 import CardMovie from "../components/movie/card/CardMovie";
 import Loading from "../components/common/Loading";
 
-const MovieCategory = () => {
+const TvCategory = () => {
   const { category } = useParams();
-  const { data: movies, loading } = useFetch(
-    () => getMovies(category),
-    category,
-  );
+  const { data: tv, loading } = useFetch(() => getTvShows(category), category);
 
   if (loading) return <Loading />;
 
   const formatTitle = (slug) => {
-    return slug.replace("_", " ").replace(/\b\w/g, (c) => c.toUpperCase());
+    if (!slug) return "";
+    return slug
+      .replace(/_/g, " ") 
+      .split(" ") 
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) 
+      .join(" "); 
   };
 
   return (
@@ -38,8 +40,8 @@ const MovieCategory = () => {
           </div>
         </div>
         <div className="bg-denflix-midnight rounded-lg p-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-y-6 justify-items-center">
-          {movies.map((movie) => (
-            <CardMovie key={movie.id} movie={movie} />
+          {tv.map((show) => (
+            <CardMovie key={show.id} movie={show} />
           ))}
         </div>
       </div>
@@ -47,4 +49,4 @@ const MovieCategory = () => {
   );
 };
 
-export default MovieCategory;
+export default TvCategory;

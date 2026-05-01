@@ -8,6 +8,7 @@ import Loading from "../components/common/Loading";
 import NotFound from "../pages/NotFound";
 import GenrePage from "../pages/GenrePage";
 import TvDetail from "../pages/TvDetail";
+import TvCategory from "../pages/TvCategory";
 
 const AppRoutes = () => {
   return (
@@ -19,6 +20,7 @@ const AppRoutes = () => {
             <Route path="/movie/:category" element={<MovieCategory />} />
             <Route path="/movie/detail/:id" element={<MovieDetail />} />
             <Route path="/genre/:id" element={<GenrePage />} />
+            <Route path="/tv/:category" element={<TvCategory />} />
             <Route path="/tv/detail/:id" element={<TvDetail />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
