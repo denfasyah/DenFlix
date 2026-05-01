@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.swal2-timer-progress-bar {
+  background: #EAB308 !important;
+}
+
+.swal2-styled.swal2-confirm {
+  background-color: #EAB308 !important;
+  color: black !important;
+  font-weight: bold;
+}
+
+.swal2-backdrop-show {
+  backdrop-filter: blur(8px); 
+  -webkit-backdrop-filter: blur(8px); 
+  background: rgba(0, 0, 0, 0.7) !important; 
+}
+
+.swal2-show {
+  animation: swal2-show 0.3s !important;
+}

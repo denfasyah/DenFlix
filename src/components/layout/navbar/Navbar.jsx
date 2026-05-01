@@ -7,13 +7,27 @@ import NavList from "./NavList";
 import NavBookmark from "./NavBookmark";
 import NavProfile from "./NavProfile";
 import NavMobile from "./NavMobile";
+import { UserAuth } from "../../../context/AuthContext";
+import { AnimatePresence } from "framer-motion";  
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Efek untuk mendeteksi scroll
+  const { user, googleSignIn, logOut, loading } = UserAuth();
+
+  const handleSignIn = async () => {
+    setIsLoading(true);
+    try {
+      await googleSignIn();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -23,18 +37,21 @@ const Navbar = () => {
   }, []);
 
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
-  
+
   const navLinkStyle =
     "group relative text-white text-md font-semibold hover:cursor-pointer transition-all duration-300 outline-none hover:text-denflix-primary focus:text-denflix-primary pb-1 flex items-center gap-1";
   const underlineStyle =
     "absolute left-0 bottom-0 w-0 h-[2px] bg-denflix-primary transition-all duration-300 group-hover:w-full group-focus:w-full";
 
   return (
-    <nav className={`navbar fixed top-0 left-0 right-0 z-[100] transition-all duration-500 px-4 md:px-8 
-      ${scrolled 
-        ? "bg-black/80 backdrop-blur-lg h-16 shadow-2xl border-b border-white/5" 
-        : "bg-transparent h-24"}`}>
-      
+    <nav
+      className={`navbar fixed top-0 left-0 right-0 z-[100] transition-all duration-500 px-4 md:px-8 
+      ${
+        scrolled
+          ? "bg-black/80 backdrop-blur-lg h-16 shadow-2xl border-b border-white/5"
+          : "bg-transparent h-24"
+      }`}
+    >
       <div className="navbar-start lg:hidden">
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -47,23 +64,41 @@ const Navbar = () => {
       <div className="navbar-start hidden lg:flex items-center">
         <NavBrand url="/" />
         <div className="flex items-center gap-6 ml-8">
-          <NavLink url="/" title="Home" navLinkStyle={navLinkStyle} underlineStyle={underlineStyle} />
+          <NavLink
+            url="/"
+            title="Home"
+            navLinkStyle={navLinkStyle}
+            underlineStyle={underlineStyle}
+          />
 
-          <NavDropdown title="Movies" navLinkStyle={navLinkStyle} underlineStyle={underlineStyle}>
+          <NavDropdown
+            title="Movies"
+            navLinkStyle={navLinkStyle}
+            underlineStyle={underlineStyle}
+          >
             <NavList url="/movie/now_playing" title="Now Playing" />
             <NavList url="/movie/popular" title="Popular" />
             <NavList url="/movie/top_rated" title="Top Rated" />
             <NavList url="/movie/upcoming" title="Upcoming" />
           </NavDropdown>
 
-          <NavDropdown title="TV Shows" navLinkStyle={navLinkStyle} underlineStyle={underlineStyle}>
+          <NavDropdown
+            title="TV Shows"
+            navLinkStyle={navLinkStyle}
+            underlineStyle={underlineStyle}
+          >
             <NavList url="/tv/popular" title="Popular" />
             <NavList url="/tv/airing_today" title="Airing Today" />
             <NavList url="/tv/on_the_air" title="On TV" />
             <NavList url="/tv/top_rated" title="Top Rated" />
           </NavDropdown>
 
-          <NavLink url="/person/popular" title="Popular Cast" navLinkStyle={navLinkStyle} underlineStyle={underlineStyle} />
+          <NavLink
+            url="/person/popular"
+            title="Popular Cast"
+            navLinkStyle={navLinkStyle}
+            underlineStyle={underlineStyle}
+          />
         </div>
       </div>
 
@@ -72,18 +107,29 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-end flex gap-4 md:gap-6 items-center">
-        {isLoggedIn && <NavBookmark />}
-        {isLoggedIn ? (
-          <NavProfile onLogout={() => setIsLoggedIn(false)} />
+  <AnimatePresence mode="wait">
+    {loading ? (
+      <div key="loading" className="h-10 w-10 animate-pulse bg-white/10 rounded-full"></div>
+    ) : (
+      <>
+        {user && <NavBookmark key="bookmark" />}
+        {user ? (
+          <NavProfile key="profile" user={user} onLogout={logOut} />
         ) : (
           <button
-            onClick={() => setIsLoggedIn(true)}
-            className="bg-denflix-primary hover:bg-yellow-500 text-black px-6 py-2 rounded-full font-bold text-sm transition-all active:scale-95 shadow-lg"
+            key="login-btn"
+            onClick={handleSignIn}
+            className={`bg-denflix-primary hover:bg-yellow-500 text-black px-6 py-2 rounded-full font-bold text-sm transition-all active:scale-95 shadow-lg ${
+              isLoading ? "loading" : ""
+            }`}
           >
-            LOGIN
+            {isLoading ? "Connecting..." : "LOGIN"}
           </button>
         )}
-      </div>
+      </>
+    )}
+  </AnimatePresence>
+</div>
 
       {isMobileMenuOpen && (
         <NavMobile isOpen={isMobileMenuOpen} onClose={closeMobileMenu} />

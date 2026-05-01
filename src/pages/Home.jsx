@@ -14,36 +14,38 @@ const Home = () => {
 
   return (
     <div>
-      <Reveal>
+      <Reveal delay={0.2}>
         <HeroSection movies={nowPlaying} />
       </Reveal>
-      <Reveal>
-        <Trending />
-      </Reveal>
-      <Reveal>
+      {/* <section className="min-h-[300px]"> */}
+        <Reveal delay={0.2}>
+          <Trending />
+        </Reveal>
+      {/* </section> */}
+      <Reveal delay={0.2}>
         <Genre />
       </Reveal>
-      <Reveal>
+      <Reveal delay={0.2}>
         <MovieList title="Upcoming" endpoint="upcoming" url="/movie/upcoming" />
       </Reveal>
-      <Reveal>
+      <Reveal delay={0.2}>
         <MovieList
           title="Now Playing"
           endpoint="now_playing"
           url="/movie/now_playing"
         />
       </Reveal>
-      <Reveal>
+      <Reveal delay={0.2}>
         <ExclusiveBanner />
       </Reveal>
-      <Reveal>
+      <Reveal delay={0.2}>
         <TvList
           title="Airing Today Tv"
           endpoint="airing_today"
           url="/tv/airing_today"
         />
       </Reveal>
-      <Reveal>
+      <Reveal delay={0.2}>
         <CastList
           title="Popular Cast"
           endpoint="popular"
