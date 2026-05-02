@@ -26,7 +26,7 @@ const MovieCast = ({ data, imageUrl, handleImageError }) => {
                   />
 
                   <Link
-                    to={`/person/${person.id}`}
+                    to={`/person/detail/${person.id}`}
                     className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-100 transition-opacity duration-300"
                   >
                     <div className="absolute bottom-0 left-0 right-0 p-3">
