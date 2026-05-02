@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import { auth, googleProvider } from "../Services/firebase";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { db } from "../Services/firebase";
 import Swal from "sweetalert2";
 
 const AuthContext = createContext();
@@ -12,6 +14,15 @@ export const AuthContextProvider = ({ children }) => {
   const googleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+
+    const userRef = doc(db, "users", user.email); 
+    const userSnap = await getDoc(userRef);
+    if (!userSnap.exists()) {
+      await setDoc(userRef, {
+        savedShows: [],
+      });
+    }
       Swal.fire({
         title: "Success!",
         html: `Welcome, <b class="text-denflix-primary">
