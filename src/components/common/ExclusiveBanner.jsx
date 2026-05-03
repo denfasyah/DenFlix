@@ -1,7 +1,22 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import { Bookmark, MessageCircle, Star, ShieldCheck } from "lucide-react";
+import { UserAuth } from "../../context/AuthContext";
+import { AnimatePresence } from "framer-motion";
 
 const ExclusiveBanner = () => {
+  const { user, googleSignIn, loading } = UserAuth();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSignIn = async () => {
+    setIsLoading(true);
+    try {
+      await googleSignIn();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <section className="max-w-7xl mx-auto px-5 md:px-0 md:pr-6 mt-10">
       <div className="relative group overflow-hidden rounded-3xl md:rounded-none md:rounded-tl-[2.5rem] md:rounded-br-[2.5rem] bg-[#0a0a0a] border border-white/5 p-8 md:p-12 shadow-2xl">
@@ -12,33 +27,70 @@ const ExclusiveBanner = () => {
           <div className="flex-1 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-4 md:mb-6">
               <ShieldCheck className="w-3.5 h-3.5 text-denflix-primary" />
-              <span className="text-[10px] md:text-xs font-bold text-gray-300 uppercase tracking-widest">
-                Exclusive Member Access
-              </span>
+              {user ? (
+                <span className="text-[10px] md:text-xs font-bold text-gray-300 uppercase tracking-widest">
+                  WELCOME, {user.displayName.split(" ")[0]}!.
+                </span>
+              ) : (
+                <span className="text-[10px] md:text-xs font-bold text-gray-300 uppercase tracking-widest">
+                  Exclusive Member Access
+                </span>
+              )}
             </div>
-
-            <h2 className="text-2xl md:text-6xl font-black text-white italic leading-tight mb-4 md:mb-6">
-              READY TO{" "}
-              <span className="text-denflix-primary">DIVE DEEPER?</span>
-            </h2>
-
-            <p className="text-gray-400 text-sm md:text-xl max-w-xl mb-6 md:mb-8 leading-relaxed">
-              Join the community to unlock{" "}
-              <span className="text-white font-medium">
-                personalized watchlists
-              </span>
-              , write{" "}
-              <span className="text-white font-medium">expert reviews</span>,
-              and track your journey.
-            </p>
-
+            {user ? (
+              <h2 className="text-2xl md:text-6xl font-black text-white italic leading-tight mb-4 md:mb-6">
+                THANKS <span className="text-denflix-primary">FOR JOIN</span>
+              </h2>
+            ) : (
+              <h2 className="text-2xl md:text-6xl font-black text-white italic leading-tight mb-4 md:mb-6">
+                READY TO{" "}
+                <span className="text-denflix-primary">DIVE DEEPER?</span>
+              </h2>
+            )}
+            {user ? (
+              <p className="text-gray-400 text-sm md:text-xl max-w-xl mb-6 md:mb-8 leading-relaxed">
+                Manage {" "}
+                <span className="text-white font-medium">
+                  personalized watchlists
+                </span>
+                , write{" "}
+                <span className="text-white font-medium">expert reviews</span>,
+                and track your journey.
+              </p>
+            ) : (
+              <p className="text-gray-400 text-sm md:text-xl max-w-xl mb-6 md:mb-8 leading-relaxed">
+                Join the community to unlock{" "}
+                <span className="text-white font-medium">
+                  personalized watchlists
+                </span>
+                , write{" "}
+                <span className="text-white font-medium">expert reviews</span>,
+                and track your journey.
+              </p>
+            )}
             <div className="flex justify-center lg:justify-start">
-              <Link
-                to="/login"
-                className="w-full sm:w-auto px-8 py-3.5 bg-denflix-primary text-black text-sm md:text-base font-extrabold rounded-xl md:rounded-2xl hover:shadow-[0_0_30px_rgba(234,255,0,0.3)] hover:scale-105 transition-all duration-300 text-center"
-              >
-                GET STARTED
-              </Link>
+              <AnimatePresence mode="wait">
+                {loading ? (
+                  <div
+                    key="loading"
+                    className="h-5 w-5 animate-pulse bg-white/10 rounded-full"
+                  ></div>
+                ) : (
+                  <>
+                    {user ? null : (
+                      <button
+                        key="login-btn"
+                        onClick={handleSignIn}
+                        className={`w-full sm:w-auto px-8 py-3.5 bg-denflix-primary text-black text-sm md:text-base font-extrabold rounded-xl md:rounded-2xl hover:shadow-[0_0_30px_rgba(234,255,0,0.3)] hover:scale-105 transition-all duration-300 text-center ${
+                          isLoading ? "loading" : ""
+                        }`}
+                      >
+                        {isLoading ? "Connecting..." : "GET STARTED"}
+                      </button>
+                    )}
+                  </>
+                )}
+              </AnimatePresence>
             </div>
           </div>
           <div className="w-full lg:flex-1">

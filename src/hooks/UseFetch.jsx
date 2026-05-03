@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
-// fetchFunction: fungsi API yang akan dipanggil (getMovies, getMovieDetail, dll)
-// dependency: variabel yang bikin fetch jalan ulang (id, category, query)
+
 const useFetch = (fetchFunction, dependency = null) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -9,7 +8,6 @@ const useFetch = (fetchFunction, dependency = null) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Jika dependency adalah search query dan kosong, jangan fetch
       if (dependency === "") {
         setLoading(false);
         return;
