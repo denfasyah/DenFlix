@@ -301,38 +301,34 @@ const MovieReview = () => {
           onClick={handleWriteReviewClick}
           className="block w-full py-3 text-center bg-yellow-500 hover:bg-yellow-600 text-black rounded-lg transition-all text-sm font-bold shadow-lg shadow-yellow-500/10"
         >
-          {userReview ? "Edit Your Review" : "Write a Review"}
+          {userReview ? "Manage Your Review" : "Write a Review"}
         </button>
       </div>
 
-      {isActionModalOpen && (
-        <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/90 backdrop-blur-md p-4">
-          <div className="bg-[#0f0f0f] border border-zinc-800 w-full max-w-sm rounded-2xl p-6 shadow-2xl relative">
-            {/* X */}
+       {isActionModalOpen && (
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4">
+          <div className="bg-[#0f0f0f] border border-zinc-800 w-full max-w-sm rounded-3xl p-8 relative shadow-2xl">
             <button
               onClick={() => setIsActionModalOpen(false)}
-              className="absolute top-3 right-3 text-zinc-500 hover:text-white"
+              className="absolute top-4 right-4 text-zinc-500 hover:text-white"
             >
               ✕
             </button>
-
-            <h3 className="text-lg font-bold text-white mb-6 text-center">
-              Sunting Ulasan
+            <h3 className="text-xl font-bold text-center mb-8">
+              Manage Your Review
             </h3>
-
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-4">
               <button
                 onClick={handleEdit}
-                className="w-full py-3 bg-yellow-500 text-black rounded-lg font-bold"
+                className="w-full py-4 bg-yellow-500 text-black rounded-xl font-bold hover:bg-yellow-400"
               >
-                Edit
+                Edit Review
               </button>
-
               <button
                 onClick={handleDelete}
-                className="w-full py-3 bg-red-600 text-white rounded-lg font-bold"
+                className="w-full py-4 bg-red-600/10 text-red-500 border border-red-600/20 rounded-xl font-bold hover:bg-red-600 hover:text-white"
               >
-                Delete
+                Delete Permanently
               </button>
             </div>
           </div>
@@ -343,7 +339,7 @@ const MovieReview = () => {
         <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/90 backdrop-blur-md p-4">
           <div className="bg-[#0f0f0f] border border-zinc-800 w-full max-w-lg rounded-2xl p-6 shadow-2xl overflow-hidden relative">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-bold text-white">Give Your Rating</h3>
+              <h3 className="text-xl font-bold text-white">Update Review</h3>
               <button
                 onClick={() => setIsModalOpen(false)}
                 className="text-zinc-500 hover:text-white transition-colors"

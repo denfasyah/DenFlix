@@ -113,3 +113,16 @@ export const getMovieReviews = async (id, type) => {
     throw error;
   }
 };
+
+export const getAllData = async (id, type) => {
+  const finalType = typeof type === 'object' ? type.type : type;
+  const category = finalType || "movie";
+  
+  try {
+    const response = await api.get(`/${category}/${id}?append_to_response=videos,credits,watch/providers,recommendations,images`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching ${category} details:`, error);
+    throw error;
+  }
+};
