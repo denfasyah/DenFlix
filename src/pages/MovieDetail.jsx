@@ -10,6 +10,8 @@ import MovieTrailer from "../components/movie/detail/MovieTrailer";
 import MovieCast from "../components/movie/detail/MovieCast";
 import MovieGallery from "../components/movie/detail/MovieGallery";
 import MovieRecommendations from "../components/movie/detail/MovieRecommendations";
+import MovieReview from "../components/movie/detail/MovieReview";
+
 const MovieDetail = () => {
   const { id } = useParams();
   const imageUrl = import.meta.env.VITE_APP_IMAGEURL;
@@ -66,6 +68,7 @@ const MovieDetail = () => {
         imageUrl={imageUrl}
       />
       <MovieRecommendations recommendations={movie.recommendations?.results} />
+      <MovieReview type={movie} id={id} />
     </div>
   );
 };

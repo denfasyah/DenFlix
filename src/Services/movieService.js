@@ -102,4 +102,14 @@ export const getTrending = async (type = 'all', time = 'day') => {
   }
 };
 
-  
+export const getMovieReviews = async (id, type) => {
+  const finalType = typeof type === 'object' ? type.type : type;
+  const category = finalType || "movie";
+  try {
+    const response = await api.get(`/${category}/${id}/reviews`);
+    return response.data.results;
+  } catch (error) {
+    console.error(`Error:`, error);
+    throw error;
+  }
+};

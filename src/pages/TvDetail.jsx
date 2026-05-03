@@ -10,6 +10,7 @@ import MovieTrailer from "../components/movie/detail/MovieTrailer";
 import MovieCast from "../components/movie/detail/MovieCast";
 import MovieGallery from "../components/movie/detail/MovieGallery";
 import MovieRecommendations from "../components/movie/detail/MovieRecommendations";
+import MovieReview from "../components/movie/detail/MovieReview";
 
 const TvDetail = () => {
   const { id } = useParams();
@@ -62,6 +63,7 @@ const TvDetail = () => {
         imageUrl={imageUrl}
       />
       <MovieRecommendations recommendations={tv.recommendations?.results} />
+      <MovieReview type={tv} id={id} />
     </div>
   );
 };
