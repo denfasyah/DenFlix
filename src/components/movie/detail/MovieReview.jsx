@@ -4,13 +4,15 @@ import useFetch from "../../../hooks/UseFetch";
 import { getMovieReviews } from "../../../Services/movieService";
 import { UserAuth } from "../../../context/AuthContext";
 import Swal from "sweetalert2";
+import { db } from "../../../Services/firebase"; 
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 const MovieReview = () => {
   const { user } = UserAuth();
-  const { id } = useParams(); 
-  const location = useLocation(); 
-  
-  const typeFromUrl = location.pathname.split("/")[1]; 
+  const { id } = useParams();
+  const location = useLocation();
+
+  const typeFromUrl = location.pathname.split("/")[1];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reviewText, setReviewText] = useState("");
@@ -18,7 +20,7 @@ const MovieReview = () => {
 
   const { data: tmdbData, loading } = useFetch(
     () => getMovieReviews(id, typeFromUrl),
-    id
+    id,
   );
 
   const reviews = Array.isArray(tmdbData) ? tmdbData : [];
@@ -39,31 +41,74 @@ const MovieReview = () => {
     setIsModalOpen(true);
   };
 
-  const handleSubmitReview = () => {
+  const handleSubmitReview = async () => {
     if (rating === 0) {
-      Swal.fire({ title: "Rating diperlukan", text: "Berikan rating bintang dulu ya!", icon: "error", background: "#080808", color: "#fff" });
+      Swal.fire({
+        title: "Rating diperlukan",
+        text: "Berikan rating bintang dulu ya!",
+        icon: "error",
+        background: "#080808",
+        color: "#fff",
+      });
       return;
     }
+
     if (reviewText.trim().length < 10) {
-      Swal.fire({ title: "Review terlalu pendek", text: "Minimal ulasan 10 karakter.", icon: "error", background: "#080808", color: "#fff" });
+      Swal.fire({
+        title: "Review terlalu pendek",
+        text: "Minimal ulasan 10 karakter.",
+        icon: "error",
+        background: "#080808",
+        color: "#fff",
+      });
       return;
     }
-    
-    console.log({ rating, reviewText, userId: user.uid, type: typeFromUrl, mediaId: id });
-    
-    Swal.fire({
-      title: "Ulasan Terkirim!",
-      text: "Terima kasih sudah berbagi ulasan di Denflix.",
-      icon: "success",
-      background: "#080808",
-      color: "#fff",
-      timer: 2000,
-      showConfirmButton: false
-    });
-    
-    setReviewText("");
-    setRating(0);
-    setIsModalOpen(false);
+
+    try {
+      Swal.fire({
+        title: "Mengirim ulasan...",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+        background: "#080808",
+        color: "#fff",
+      });
+
+      await addDoc(collection(db, "reviews"), {
+        userId: user.uid,
+        userName: user.displayName || "Anonymous",
+        userPhoto: user.photoURL || "",
+        mediaId: id,
+        mediaType: typeFromUrl,
+        rating: rating,
+        content: reviewText,
+        createdAt: serverTimestamp(),
+      });
+
+      Swal.fire({
+        title: "Berhasil!",
+        text: "Ulasan kamu telah tersimpan di Denflix.",
+        icon: "success",
+        background: "#080808",
+        color: "#fff",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+
+      setReviewText("");
+      setRating(0);
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Error: ", error);
+      Swal.fire({
+        title: "Gagal!",
+        text: "Terjadi kesalahan saat menyimpan ulasan.",
+        icon: "error",
+        background: "#080808",
+        color: "#fff",
+      });
+    }
   };
 
   return (
@@ -85,7 +130,10 @@ const MovieReview = () => {
           <p className="text-zinc-500 animate-pulse">Loading reviews...</p>
         ) : previewReviews.length > 0 ? (
           previewReviews.map((rev) => (
-            <div key={rev.id} className="p-5 bg-zinc-900/50 rounded-bl-xl rounded-tr-xl border border-zinc-800 hover:border-zinc-700 transition-colors">
+            <div
+              key={rev.id}
+              className="p-5 bg-zinc-900/50 rounded-bl-xl rounded-tr-xl border border-zinc-800 hover:border-zinc-700 transition-colors"
+            >
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-full bg-zinc-700 overflow-hidden border border-zinc-600">
                   <img
@@ -100,11 +148,15 @@ const MovieReview = () => {
                     }
                     alt={rev.author}
                     className="w-full h-full object-cover"
-                    onError={(e) => { e.target.src = `https://ui-avatars.com/api/?name=${rev.author}&background=random`; }}
+                    onError={(e) => {
+                      e.target.src = `https://ui-avatars.com/api/?name=${rev.author}&background=random`;
+                    }}
                   />
                 </div>
                 <div>
-                  <h4 className="text-white font-semibold text-sm">{rev.author}</h4>
+                  <h4 className="text-white font-semibold text-sm">
+                    {rev.author}
+                  </h4>
                   <p className="text-zinc-500 text-[10px] uppercase">
                     {new Date(rev.created_at).toLocaleDateString("id-ID")}
                   </p>
@@ -115,7 +167,9 @@ const MovieReview = () => {
                   </div>
                 )}
               </div>
-              <p className="text-zinc-400 text-sm line-clamp-3 italic leading-relaxed">"{rev.content}"</p>
+              <p className="text-zinc-400 text-sm line-clamp-3 italic leading-relaxed">
+                "{rev.content}"
+              </p>
             </div>
           ))
         ) : (
@@ -140,9 +194,14 @@ const MovieReview = () => {
           <div className="bg-[#0f0f0f] border border-zinc-800 w-full max-w-lg rounded-2xl p-6 shadow-2xl overflow-hidden relative animate-in zoom-in-95 duration-200">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-xl font-bold text-white">Give Your Rating</h3>
-              <button onClick={() => setIsModalOpen(false)} className="text-zinc-500 hover:text-white transition-colors">✕</button>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="text-zinc-500 hover:text-white transition-colors"
+              >
+                ✕
+              </button>
             </div>
-            
+
             <div className="flex flex-col items-center mb-6 bg-zinc-900/50 py-4 rounded-xl border border-zinc-800">
               <div className="flex gap-1 mb-2">
                 {[...Array(10)].map((_, index) => (
@@ -156,20 +215,29 @@ const MovieReview = () => {
                   </button>
                 ))}
               </div>
-              <span className="text-yellow-500 font-bold text-lg">{rating || "0"} / 10</span>
-              <p className="text-zinc-500 text-[10px] uppercase tracking-tighter mt-1">Select your score</p>
+              <span className="text-yellow-500 font-bold text-lg">
+                {rating || "0"} / 10
+              </span>
+              <p className="text-zinc-500 text-[10px] uppercase tracking-tighter mt-1">
+                Select your score
+              </p>
             </div>
 
-            <textarea 
+            <textarea
               value={reviewText}
               onChange={(e) => setReviewText(e.target.value)}
               className="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-4 text-white text-sm focus:outline-none focus:border-yellow-500 min-h-[120px] transition-all resize-none"
               placeholder="Tulis pendapat jujurmu di sini..."
             ></textarea>
-            
+
             <div className="flex gap-3 mt-6">
-              <button onClick={() => setIsModalOpen(false)} className="flex-1 py-3 bg-zinc-800 text-white rounded-lg font-semibold hover:bg-zinc-700 transition-all">Cancel</button>
-              <button 
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="flex-1 py-3 bg-zinc-800 text-white rounded-lg font-semibold hover:bg-zinc-700 transition-all"
+              >
+                Cancel
+              </button>
+              <button
                 onClick={handleSubmitReview}
                 className="flex-1 py-3 bg-yellow-500 text-black rounded-lg font-bold hover:bg-yellow-600 transition-all shadow-lg shadow-yellow-500/20"
               >
