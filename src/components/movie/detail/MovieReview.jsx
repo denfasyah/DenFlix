@@ -1,11 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import useFetch from "../../../hooks/UseFetch";
 import { getMovieReviews } from "../../../Services/movieService";
 import { UserAuth } from "../../../context/AuthContext";
 import Swal from "sweetalert2";
-import { db } from "../../../Services/firebase"; 
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "../../../Services/firebase";
+import {
+  collection,
+  serverTimestamp,
+  query,
+  where,
+  onSnapshot,
+  doc,
+  setDoc,
+  getDoc,
+  deleteDoc,
+} from "firebase/firestore";
 
 const MovieReview = () => {
   const { user } = UserAuth();
@@ -15,8 +25,10 @@ const MovieReview = () => {
   const typeFromUrl = location.pathname.split("/")[1];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isActionModalOpen, setIsActionModalOpen] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
+  const [localReviews, setLocalReviews] = useState([]);
 
   const { data: tmdbData, loading } = useFetch(
     () => getMovieReviews(id, typeFromUrl),
@@ -24,7 +36,47 @@ const MovieReview = () => {
   );
 
   const reviews = Array.isArray(tmdbData) ? tmdbData : [];
-  const previewReviews = reviews.slice(0, 2);
+  const allReviews =
+    localReviews.length > 0 ? [...localReviews, ...reviews] : reviews;
+
+  const previewReviews = allReviews.slice(0, 2);
+
+  const userReview = localReviews.find((rev) => rev.userId === user?.uid);
+
+  useEffect(() => {
+    if (!id) return;
+
+    const reviewsRef = collection(db, "reviews");
+
+    const q = query(reviewsRef, where("mediaId", "==", String(id)));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const fetchedReviews = snapshot.docs.map((doc) => {
+        const data = doc.data();
+
+        return {
+          id: doc.id,
+          ...data,
+          created_at:
+            data.createdAt?.toDate()?.toISOString() || new Date().toISOString(),
+          updated_at: data.updatedAt?.toDate()?.toISOString() || null,
+          author: data.userName,
+          author_details: {
+            rating: data.rating,
+            avatar_path: data.userPhoto,
+          },
+        };
+      });
+
+      fetchedReviews.sort((a, b) => {
+        return new Date(b.created_at) - new Date(a.created_at);
+      });
+
+      setLocalReviews(fetchedReviews);
+    });
+
+    return () => unsubscribe();
+  }, [id]);
 
   const handleWriteReviewClick = () => {
     if (!user) {
@@ -38,7 +90,58 @@ const MovieReview = () => {
       });
       return;
     }
+
+    if (userReview) {
+      setIsActionModalOpen(true); 
+    } else {
+      setIsModalOpen(true);
+    }
+  };
+
+  const handleEdit = () => {
+    setReviewText(userReview.content);
+    setRating(userReview.rating);
+    setIsActionModalOpen(false);
     setIsModalOpen(true);
+  };
+
+  const handleDelete = async () => {
+    const confirm = await Swal.fire({
+      title: "Yakin hapus?",
+      text: "Review kamu akan dihapus permanen",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya, hapus",
+      cancelButtonText: "Batal",
+      background: "#080808",
+      color: "#fff",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    try {
+      await deleteDoc(doc(db, "reviews", `${user.uid}_${id}`));
+      setReviewText(""); // Bersihkan teks review
+      setRating(0);
+      Swal.fire({
+        title: "Terhapus!",
+        icon: "success",
+        background: "#080808",
+        color: "#fff",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+
+      setIsActionModalOpen(false);
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        title: "Gagal hapus",
+        icon: "error",
+        background: "#080808",
+        color: "#fff",
+      });
+    }
   };
 
   const handleSubmitReview = async () => {
@@ -68,27 +171,40 @@ const MovieReview = () => {
       Swal.fire({
         title: "Mengirim ulasan...",
         allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        },
+        didOpen: () => Swal.showLoading(),
         background: "#080808",
         color: "#fff",
       });
 
-      await addDoc(collection(db, "reviews"), {
+      const reviewId = `${user.uid}_${id}`;
+      const reviewRef = doc(db, "reviews", reviewId);
+
+      const existingDoc = await getDoc(reviewRef);
+
+      let createdAtValue = serverTimestamp();
+
+      if (existingDoc.exists()) {
+        // 🔥 kalau edit → pakai created lama
+        createdAtValue = existingDoc.data().createdAt;
+      }
+
+      await setDoc(reviewRef, {
         userId: user.uid,
         userName: user.displayName || "Anonymous",
         userPhoto: user.photoURL || "",
-        mediaId: id,
+        mediaId: String(id),
         mediaType: typeFromUrl,
         rating: rating,
         content: reviewText,
-        createdAt: serverTimestamp(),
+        createdAt: createdAtValue,
+        updatedAt: serverTimestamp(),
       });
 
       Swal.fire({
         title: "Berhasil!",
-        text: "Ulasan kamu telah tersimpan di Denflix.",
+        text: existingDoc.exists()
+          ? "Ulasan kamu berhasil diperbarui."
+          : "Ulasan kamu telah tersimpan.",
         icon: "success",
         background: "#080808",
         color: "#fff",
@@ -148,9 +264,6 @@ const MovieReview = () => {
                     }
                     alt={rev.author}
                     className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.target.src = `https://ui-avatars.com/api/?name=${rev.author}&background=random`;
-                    }}
                   />
                 </div>
                 <div>
@@ -158,7 +271,11 @@ const MovieReview = () => {
                     {rev.author}
                   </h4>
                   <p className="text-zinc-500 text-[10px] uppercase">
-                    {new Date(rev.created_at).toLocaleDateString("id-ID")}
+                    {rev.updated_at &&
+                    new Date(rev.updated_at).getTime() !==
+                      new Date(rev.created_at).getTime()
+                      ? `UPDATED: ${new Date(rev.updated_at).toLocaleDateString("id-ID")}`
+                      : `POSTED: ${new Date(rev.created_at).toLocaleDateString("id-ID")}`}
                   </p>
                 </div>
                 {rev.author_details?.rating && (
@@ -184,14 +301,47 @@ const MovieReview = () => {
           onClick={handleWriteReviewClick}
           className="block w-full py-3 text-center bg-yellow-500 hover:bg-yellow-600 text-black rounded-lg transition-all text-sm font-bold shadow-lg shadow-yellow-500/10"
         >
-          Write a Review for {typeFromUrl === "movie" ? "Movie" : "TV"}
+          {userReview ? "Edit Your Review" : "Write a Review"}
         </button>
       </div>
 
-      {/* MODAL*/}
+      {isActionModalOpen && (
+        <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/90 backdrop-blur-md p-4">
+          <div className="bg-[#0f0f0f] border border-zinc-800 w-full max-w-sm rounded-2xl p-6 shadow-2xl relative">
+            {/* X */}
+            <button
+              onClick={() => setIsActionModalOpen(false)}
+              className="absolute top-3 right-3 text-zinc-500 hover:text-white"
+            >
+              ✕
+            </button>
+
+            <h3 className="text-lg font-bold text-white mb-6 text-center">
+              Sunting Ulasan
+            </h3>
+
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={handleEdit}
+                className="w-full py-3 bg-yellow-500 text-black rounded-lg font-bold"
+              >
+                Edit
+              </button>
+
+              <button
+                onClick={handleDelete}
+                className="w-full py-3 bg-red-600 text-white rounded-lg font-bold"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {isModalOpen && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/90 backdrop-blur-md p-4">
-          <div className="bg-[#0f0f0f] border border-zinc-800 w-full max-w-lg rounded-2xl p-6 shadow-2xl overflow-hidden relative animate-in zoom-in-95 duration-200">
+          <div className="bg-[#0f0f0f] border border-zinc-800 w-full max-w-lg rounded-2xl p-6 shadow-2xl overflow-hidden relative">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-xl font-bold text-white">Give Your Rating</h3>
               <button
@@ -226,7 +376,7 @@ const MovieReview = () => {
             <textarea
               value={reviewText}
               onChange={(e) => setReviewText(e.target.value)}
-              className="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-4 text-white text-sm focus:outline-none focus:border-yellow-500 min-h-[120px] transition-all resize-none"
+              className="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-4 text-white text-sm focus:outline-none focus:border-yellow-500 min-h-[120px] transition-all"
               placeholder="Tulis pendapat jujurmu di sini..."
             ></textarea>
 
