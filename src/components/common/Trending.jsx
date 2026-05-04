@@ -42,7 +42,7 @@ const Trending = () => {
         </div>
         <div className="carousel carousel-center w-full gap-4 px-5 py-5">
           {trendingData?.map((item) => (
-            <CardMovie movie={item} />
+            <CardMovie key={item.id} movie={item} />
           ))}
         </div>
       </div>

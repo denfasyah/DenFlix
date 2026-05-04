@@ -13,6 +13,7 @@ import CastCategory from "../pages/CastCategory";
 import CastDetail from "../pages/CastDetail"; 
 import MyBookmark from "../pages/MyBookmark";
 import ReviewPage from "../pages/ReviewPage";
+import MyProfile from "../pages/MyProfile";
 
 const AppRoutes = () => {
   return (
@@ -30,6 +31,7 @@ const AppRoutes = () => {
             <Route path="/person/:category" element={<CastCategory />} />
             <Route path="/bookmark" element={<MyBookmark />} />
             <Route path="/:type/:id/reviews" element={<ReviewPage />} />
+             <Route path="/profile" element={<MyProfile />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
