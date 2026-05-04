@@ -72,7 +72,7 @@ Denflix emphasizes user experience, real-time interaction, and clean, modern UI 
 
 ---
 
-## 🛠️ Installation
+## 🛠️ Build and Dev
 
 - Clone repository
  ```sh
