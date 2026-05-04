@@ -1,4 +1,4 @@
-import useFetch from "../../../hooks/useFetch";
+import useFetch from "../../../hooks/UseFetch";
 import { getTvShows } from "../../../Services/movieService";
 import HeaderMovieList from "../../movie/list/HeaderMovieList";
 import CardMovie from "../../movie/card/CardMovie";

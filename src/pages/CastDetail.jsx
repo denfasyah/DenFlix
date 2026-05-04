@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import useFetch from "../hooks/useFetch";
+import useFetch from "../hooks/UseFetch";
 import { getCastDetail } from "../Services/movieService";
 import CardMovie from "../components/movie/card/CardMovie";
 import Loading from "../components/common/Loading";

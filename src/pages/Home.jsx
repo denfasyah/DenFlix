@@ -1,4 +1,4 @@
-import useFetch from "../hooks/useFetch";
+import useFetch from "../hooks/UseFetch";
 import { getMovies } from "../Services/movieService"; // Sesuaikan path file
 import HeroSection from "../components/fragments/HeroSection";
 import Trending from "../components/common/Trending";

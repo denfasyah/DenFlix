@@ -1,5 +1,5 @@
 import { useParams, useSearchParams, Link } from "react-router-dom";
-import useFetch from "../hooks/useFetch";
+import useFetch from "../hooks/UseFetch";
 import { getDiscoverByGenre, getGenres } from "../Services/movieService";
 import CardMovie from "../components/movie/card/CardMovie";
 import Loading from "../components/common/Loading";

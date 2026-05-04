@@ -1,4 +1,4 @@
-import useFetch from "../hooks/useFetch";
+import useFetch from "../hooks/UseFetch";
 import { useParams } from "react-router-dom";
 import { getCast } from "../Services/movieService";
 import CardMovie from "../components/movie/card/CardMovie";

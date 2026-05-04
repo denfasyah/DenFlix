@@ -1,4 +1,4 @@
-import useFetch from "../hooks/useFetch";
+import useFetch from "../hooks/UseFetch";
 import { useSearchParams, Link } from "react-router-dom";
 import { searchMulti } from "../Services/movieService";
 import CardMovie from "../components/movie/card/CardMovie";
