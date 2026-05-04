@@ -5,7 +5,7 @@ const NavBookmark = () => {
     <div>
         <Link
             to="/bookmark"
-            className="text-white hover:text-denflix-primary transition-colors text-xl"
+            className="text-white focus:text-denflix-primary hover:text-denflix-primary transition-colors text-xl"
             title="Bookmarks"
           >
             <FaRegBookmark />

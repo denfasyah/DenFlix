@@ -1,4 +1,4 @@
-import { Routes, Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import Search from "../pages/Search";
 import MovieDetail from "../pages/MovieDetail";
@@ -10,31 +10,33 @@ import GenrePage from "../pages/GenrePage";
 import TvDetail from "../pages/TvDetail";
 import TvCategory from "../pages/TvCategory";
 import CastCategory from "../pages/CastCategory";
-import CastDetail from "../pages/CastDetail"; 
+import CastDetail from "../pages/CastDetail";
 import MyBookmark from "../pages/MyBookmark";
 import ReviewPage from "../pages/ReviewPage";
 import MyProfile from "../pages/MyProfile";
+import ContactUs from "../pages/ContactUs";
 
 const AppRoutes = () => {
   return (
     <div>
-        <Suspense fallback={<Loading />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/movie/:category" element={<MovieCategory />} />
-            <Route path="/movie/detail/:id" element={<MovieDetail />} />
-            <Route path="/genre/:id" element={<GenrePage />} />
-            <Route path="/tv/:category" element={<TvCategory />} />
-            <Route path="/tv/detail/:id" element={<TvDetail />} />
-            <Route path="/person/detail/:id" element={<CastDetail />} />
-            <Route path="/person/:category" element={<CastCategory />} />
-            <Route path="/bookmark" element={<MyBookmark />} />
-            <Route path="/:type/:id/reviews" element={<ReviewPage />} />
-             <Route path="/profile" element={<MyProfile />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/movie/:category" element={<MovieCategory />} />
+          <Route path="/movie/detail/:id" element={<MovieDetail />} />
+          <Route path="/genre/:id" element={<GenrePage />} />
+          <Route path="/tv/:category" element={<TvCategory />} />
+          <Route path="/tv/detail/:id" element={<TvDetail />} />
+          <Route path="/person/detail/:id" element={<CastDetail />} />
+          <Route path="/person/:category" element={<CastCategory />} />
+          <Route path="/bookmark" element={<MyBookmark />} />
+          <Route path="/:type/:id/reviews" element={<ReviewPage />} />
+          <Route path="/profile" element={<MyProfile />} />
+          <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 };

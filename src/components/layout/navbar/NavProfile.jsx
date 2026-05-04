@@ -6,7 +6,7 @@ const NavProfile = ({ user, onLogout }) => {
     <div className="dropdown dropdown-end">
       <label
         tabIndex={0}
-        className="btn btn-ghost btn-circle avatar border-2 border-transparent hover:border-denflix-primary transition-all shadow-lg"
+        className="btn btn-ghost btn-circle avatar border-2 border-transparent hover:border-denflix-primary focus:bg-denflix-primary transition-all shadow-lg"
       >
         <div className="w-10 rounded-full bg-neutral flex items-center justify-center overflow-hidden">
           {user?.photoURL ? (
@@ -36,8 +36,8 @@ const NavProfile = ({ user, onLogout }) => {
           </Link>
         </li>
         <li>
-          <Link to="/settings" className="text-white py-2 hover:bg-white/10 transition-colors">
-            Settings
+          <Link to="/contact-us" className="text-white py-2 hover:bg-white/10 transition-colors">
+            Contact Us
           </Link>
         </li>
         

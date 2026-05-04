@@ -48,7 +48,7 @@ const MyProfile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white pt-20 px-4 selection:bg-lime-400 selection:text-black">
+    <div className=" text-white pt-14 px-4 selection:bg-lime-400 selection:text-black">
       <div className="max-w-4xl mx-auto">
         <div className="relative overflow-hidden bg-zinc-900/30 border border-zinc-800 rounded-[40px] backdrop-blur-xl">
           <div className="absolute -top-24 -right-24 w-64 h-64 bg-lime-400/10 blur-[100px] rounded-full" />
