@@ -22,7 +22,7 @@ const MovieReview = () => {
   const { id } = useParams();
   const location = useLocation();
 
-  const typeFromUrl = location.pathname.split("/")[1];
+  const typeFromUrl = location?.pathname?.split("/")?.[1] || "";
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isActionModalOpen, setIsActionModalOpen] = useState(false);
