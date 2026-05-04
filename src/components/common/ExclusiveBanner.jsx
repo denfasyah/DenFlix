@@ -29,7 +29,7 @@ const ExclusiveBanner = () => {
               <ShieldCheck className="w-3.5 h-3.5 text-denflix-primary" />
               {user ? (
                 <span className="text-[10px] md:text-xs font-bold text-gray-300 uppercase tracking-widest">
-                  WELCOME, {user.displayName.split(" ")[0]}!.
+                  WELCOME, {(user.displayName || "User").split(" ")[0]}!
                 </span>
               ) : (
                 <span className="text-[10px] md:text-xs font-bold text-gray-300 uppercase tracking-widest">
